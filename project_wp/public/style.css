@@ -1,0 +1,194 @@
+/* Reset Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #2c3e50;
+    color: white;
+}
+
+.logo img {
+    height: 50px;
+}
+
+.search-cart {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.search-bar input {
+    padding: 8px;
+    width: 250px;
+    border: none;
+    border-radius: 5px;
+}
+
+.search-bar button {
+    padding: 8px 12px;
+    border: none;
+    background-color: #e67e22;
+    color: white;
+    cursor: pointer;
+}
+
+.cart img {
+    width: 30px;
+    cursor: pointer;
+}
+
+/* Navigation */
+nav {
+    background-color: #34495e;
+    padding: 10px;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    list-style: none;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Cover Image */
+.cover img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    margin-top: 10px;
+}
+
+/* Genre Section */
+.genres {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.genre-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.genre {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.genre img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+    display: block;
+}
+
+.genre span {
+    margin-top: 10px;
+    font-weight: bold;
+    padding: 5px 12px;
+    border-radius: 20px;
+    display: inline-block;
+    text-decoration: none !important;
+    background-color: inherit;
+    color: inherit;
+}
+
+.genre-link {
+    text-decoration: none;
+    color: inherit;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.genre-link:hover .genre img {
+    transform: scale(1.1);
+}
+
+/* Specific genre underline fixes */
+.genre-fiction span,
+.genre-nonfiction span,
+.genre-mystery span,
+.genre-romance span,
+.genre-fantasy span,
+.genre-science span,
+.genre-horror span,
+.genre-biography span,
+.genre-selfhelp span {
+    text-decoration: none !important;
+    text-decoration-color: transparent !important;
+    color: inherit;
+}
+
+/* Book Sections */
+.book-section {
+    margin: 40px;
+}
+
+.book-section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.book-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    justify-content: center;
+}
+
+.book {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Individual Hover Effects for Books */
+.book1 img, .book2 img, .book3 img, .book4 img,
+.book5 img, .book6 img, .book7 img, .book8 img,
+.book9 img, .book10 img, .book11 img, .book12 img,
+.book13 img, .book14 img, .book15 img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+/* Hover Effect */
+.book1 img:hover, .book2 img:hover, .book3 img:hover, .book4 img:hover,
+.book5 img:hover, .book6 img:hover, .book7 img:hover, .book8 img:hover,
+.book9 img:hover, .book10 img:hover, .book11 img:hover, .book12 img:hover,
+.book13 img:hover, .book14 img:hover, .book15 img:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Footer */
+footer {
+    background-color: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 20px;
+}

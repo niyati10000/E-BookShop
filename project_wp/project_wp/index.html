@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enchanted Bookstore</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Fauna+One&display=swap');
+        
+        :root {
+            --gold: #FFD700;
+            --purple: #6A0DAD;
+            --deep-blue: #0A0E3F;
+            --twilight: #1A1C4D;
+        }
+        
+        body {
+            font-family: 'Fauna One', serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--deep-blue);
+            color: #f0f0f0;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255,215,0,0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(106,13,173,0.1) 0%, transparent 20%),
+                url('https://images.unsplash.com/photo-1531685250784-7569952593d2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-attachment: fixed;
+            background-size: cover;
+        }
+
+        .magic-container {
+            background-color: rgba(10, 14, 63, 0.85);
+            backdrop-filter: blur(3px);
+            box-shadow: 0 0 30px rgba(106, 13, 173, 0.5);
+            max-width: 1200px;
+            margin: 0 auto;
+            border-left: 1px solid var(--gold);
+            border-right: 1px solid var(--gold);
+        }
+
+        /* Enchanted Header */
+        header {
+            position: relative;
+            padding: 30px 20px;
+            text-align: center;
+            background: 
+                linear-gradient(to bottom, rgba(10,14,63,0.9), rgba(26,28,77,0.7)),
+                url('https://images.unsplash.com/photo-1531685250784-7569952593d2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            border-bottom: 2px solid var(--gold);
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="white" opacity="0.7"/></svg>');
+            background-size: 3px 3px;
+            opacity: 0.3;
+            animation: twinkle 5s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+
+        .logo img {
+            height: 80px;
+            filter: drop-shadow(0 0 10px rgba(255,215,0,0.7));
+            transition: all 0.5s ease;
+            animation: float 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+
+        .logo img:hover {
+            filter: drop-shadow(0 0 20px rgba(255,215,0,0.9));
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .tagline {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 20px;
+            margin-top: 10px;
+            color: var(--gold);
+            text-shadow: 0 0 8px rgba(255,215,0,0.5);
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+        }
+
+        .tagline::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            opacity: 0.7;
+        }
+
+        .tagline:hover {
+            color: white;
+            text-shadow: 0 0 12px rgba(255,255,255,0.8);
+        }
+
+        /* Magic Navigation */
+        nav ul {
+            display: flex;
+            justify-content: center;
+            background: linear-gradient(to right, transparent, rgba(106,13,173,0.5), transparent);
+            padding: 12px 0;
+            margin: 0;
+            list-style: none;
+            border-top: 1px solid rgba(255,215,0,0.3);
+            border-bottom: 1px solid rgba(255,215,0,0.3);
+        }
+
+        nav ul li {
+            margin: 0 15px;
+            position: relative;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 5px 10px;
+            transition: all 0.3s ease;
+            border-radius: 15px;
+            font-family: 'Cinzel Decorative', cursive;
+        }
+
+        nav ul li a:hover {
+            color: var(--gold);
+            text-shadow: 0 0 8px rgba(255,215,0,0.7);
+            background: rgba(106,13,173,0.3);
+        }
+
+        nav ul li::before {
+            content: "✦";
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gold);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        nav ul li:hover::before {
+            opacity: 1;
+        }
+
+        /* Floating Books Header */
+        .magic-header {
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+            background: 
+                linear-gradient(rgba(10,14,63,0.7), rgba(26,28,77,0.9)),
+                url('https://images.unsplash.com/photo-1531685250784-7569952593d2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid rgba(255,215,0,0.2);
+        }
+
+        .magic-header h1 {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 3rem;
+            color: white;
+            text-shadow: 0 0 15px rgba(255,215,0,0.7);
+            z-index: 2;
+            position: relative;
+        }
+
+        .floating-book {
+            position: absolute;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.8;
+            filter: drop-shadow(0 0 5px rgba(255,215,0,0.5));
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        /* Enchanted Sections */
+        .section {
+            padding: 30px 20px;
+            margin: 20px;
+            background: rgba(26, 28, 77, 0.6);
+            border-radius: 8px;
+            border: 1px solid rgba(255,215,0,0.2);
+            box-shadow: 0 0 20px rgba(106,13,173,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+        }
+
+        .section-title {
+            font-family: 'Cinzel Decorative', cursive;
+            color: var(--gold);
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+            font-size: 2rem;
+            text-shadow: 0 0 10px rgba(255,215,0,0.5);
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+        }
+
+        /* Magic Genre Display */
+        .genre-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .genre {
+            width: 140px;
+            text-align: center;
+            transition: all 0.5s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .genre:hover {
+            transform: translateY(-5px) scale(1.05);
+        }
+
+        .genre::before {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 1px solid rgba(255,215,0,0.3);
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .genre:hover::before {
+            opacity: 1;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 5px rgba(255,215,0,0.3); }
+            50% { box-shadow: 0 0 15px rgba(255,215,0,0.5); }
+            100% { box-shadow: 0 0 5px rgba(255,215,0,0.3); }
+        }
+
+        .genre img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--gold);
+            box-shadow: 0 0 15px rgba(106,13,173,0.5);
+            transition: all 0.5s ease;
+        }
+
+        .genre:hover img {
+            box-shadow: 0 0 25px rgba(255,215,0,0.7);
+        }
+
+        .genre span {
+            display: block;
+            margin-top: 10px;
+            font-family: 'Cinzel Decorative', cursive;
+            color: white;
+            background: rgba(106,13,173,0.7);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .genre:hover span {
+            background: rgba(255,215,0,0.8);
+            color: var(--deep-blue);
+        }
+
+        /* Spellbinding Book Display */
+        .book-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            padding: 20px;
+        }
+
+        .book {
+            width: 180px;
+            position: relative;
+            transition: all 0.5s ease;
+            perspective: 1000px;
+        }
+
+        .book:hover {
+            transform: translateY(-10px);
+        }
+
+        .book img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 5px;
+            border: 1px solid rgba(255,215,0,0.5);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+        }
+
+        .book:hover img {
+            box-shadow: 0 10px 25px rgba(255,215,0,0.5);
+            transform: rotateY(10deg) scale(1.05);
+        }
+
+        @keyframes sparkle {
+            0% { box-shadow: 0 0 5px var(--gold), 0 0 10px var(--purple); }
+            50% { box-shadow: 0 0 15px var(--gold), 0 0 30px var(--purple); }
+            100% { box-shadow: 0 0 5px var(--gold), 0 0 10px var(--purple); }
+        }
+
+        .book:hover img {
+            animation: sparkle 1.5s infinite alternate;
+        }
+
+        .rating {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255,215,0,0.9);
+            color: var(--deep-blue);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 14px;
+            display: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Animated Text Elements */
+        .moving-text {
+            white-space: nowrap;
+            overflow: hidden;
+            display: inline-block;
+            animation: marquee 15s linear infinite;
+            font-family: 'Cinzel Decorative', cursive;
+            color: var(--gold);
+            font-size: 1.2rem;
+            margin: 20px 0;
+            text-shadow: 0 0 5px rgba(255,215,0,0.5);
+        }
+
+        .featured-blink {
+            animation: fadeBlink 3s infinite;
+        }
+
+        @keyframes fadeBlink {
+            0% { opacity: 1; text-shadow: 0 0 10px rgba(255,215,0,0.7); }
+            50% { opacity: 0.7; text-shadow: 0 0 15px rgba(255,215,0,0.9); }
+            100% { opacity: 1; text-shadow: 0 0 10px rgba(255,215,0,0.7); }
+        }
+
+        /* Enchanted Footer */
+        footer {
+            background: linear-gradient(to bottom, rgba(10,14,63,0.9), rgba(26,28,77,1));
+            color: white;
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid rgba(255,215,0,0.3);
+            position: relative;
+        }
+
+        footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+        }
+
+        footer p {
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        /* Floating Books Animation */
+        .floating-books {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .floating-book {
+            position: absolute;
+            width: 60px;
+            height: 80px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.7;
+            filter: drop-shadow(0 0 5px rgba(255,215,0,0.5));
+            animation: floatBook 15s linear infinite;
+        }
+
+        @keyframes floatBook {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            100% { transform: translateY(-100px) rotate(10deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="magic-container">
+        <header>
+            <div class="floating-books">
+                <div class="floating-book" style="left:10%; top:20%; animation-delay:0s; background-image:url('book1.jpg')"></div>
+                <div class="floating-book" style="left:25%; top:30%; animation-delay:2s; background-image:url('book2.jpg')"></div>
+                <div class="floating-book" style="left:75%; top:25%; animation-delay:4s; background-image:url('book3.jpg')"></div>
+                <div class="floating-book" style="left:85%; top:40%; animation-delay:6s; background-image:url('book4.jpg')"></div>
+                <div class="floating-book" style="left:15%; top:50%; animation-delay:8s; background-image:url('book5.jpg')"></div>
+            </div>
+            <div class="logo"><img src="booklogo.jpg" alt="Enchanted Library Logo"></div>
+            <div class="tagline">Where Stories Come Alive</div>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="shop.html">Spellbooks</a></li>
+                <li><a href="Contactus.html">Send Owl</a></li>
+                <li><a href="Aboutus.html">Our Magic</a></li>
+                <li><a href="Mylibrary.html">Tomes</a></li>
+                <li><a href="purchased.html">Artifacts</a></li>
+                <li><a href="wishlist.html">Wish Scroll</a></li>
+                <li><a href="checkout.html">Enchantment</a></li>
+            </ul>
+        </nav>
+
+        <div class="magic-header">
+            <div class="floating-books">
+                <div class="floating-book" style="left:5%; top:10%; animation-delay:0s; background-image:url('book6.jpg')"></div>
+                <div class="floating-book" style="left:20%; top:30%; animation-delay:3s; background-image:url('book7.jpg')"></div>
+                <div class="floating-book" style="left:70%; top:20%; animation-delay:5s; background-image:url('book8.jpg')"></div>
+                <div class="floating-book" style="left:90%; top:35%; animation-delay:7s; background-image:url('book9.jpg')"></div>
+                <div class="floating-book" style="left:30%; top:50%; animation-delay:9s; background-image:url('book10.jpg')"></div>
+            </div>
+            <h1>The Enchanted Archive</h1>
+        </div>
+
+        <section class="section">
+            <h2 class="section-title">Magical Genres</h2>
+            <div class="genre-list">
+                <a href="fiction.html" class="genre-link">
+                    <div class="genre">
+                        <img src="fiction.jpg" alt="Fiction Books">
+                        <span>Ancient Tomes</span>
+                    </div>
+                </a>
+                <a href="nonfiction.html" class="genre-link">
+                    <div class="genre">
+                        <img src="nonfiction.jpg" alt="Non-Fiction Books">
+                        <span>Arcane Knowledge</span>
+                    </div>
+                </a>
+                <a href="mystery.html" class="genre-link">
+                    <div class="genre">
+                        <img src="mystry.jpg" alt="Mystery Books">
+                        <span>Mystery Scrolls</span>
+                    </div>
+                </a>
+                <a href="romance.html" class="genre-link">
+                    <div class="genre">
+                        <img src="romance.jpg" alt="Romance Books">
+                        <span>Love Potions</span>
+                    </div>
+                </a>
+                <a href="fantasy.html" class="genre-link">
+                    <div class="genre">
+                        <img src="fantasy.jpg" alt="Fantasy Books">
+                        <span>Fantasy Grimoires</span>
+                    </div>
+                </a>
+                <a href="science.html" class="genre-link">
+                    <div class="genre">
+                        <img src="science.jpg" alt="Science Books">
+                        <span>Alchemy</span>
+                    </div>
+                </a>
+                <a href="horror.html" class="genre-link">
+                    <div class="genre">
+                        <img src="horror.jpg" alt="Horror Books">
+                        <span>Dark Arts</span>
+                    </div>
+                </a>
+                <a href="biography.html" class="genre-link">
+                    <div class="genre">
+                        <img src="biography.jpg" alt="Biography Books">
+                        <span>Wizard Biographies</span>
+                    </div>
+                </a>
+                <a href="selfhelp.html" class="genre-link">
+                    <div class="genre">
+                        <img src="selfhelp.jpg" alt="Self-Help Books">
+                        <span>Spellcraft</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title best-selling">Most Powerful Tomes</h2>
+            <div class="book-grid">
+                <div class="book" onclick="showRating(this)" onmouseleave="hideRating(this)">
+                    <img src="book1.jpg" alt="Book 1">
+                    <div class="rating"></div>
+                </div>
+                <div class="book" onclick="showRating(this)" onmouseleave="hideRating(this)">
+                    <img src="book2.jpg" alt="Book 2">
+                    <div class="rating"></div>
+                </div>
+                <div class="book" onclick="showRating(this)" onmouseleave="hideRating(this)">
+                    <img src="book3.jpg" alt="Book 3">
+                    <div class="rating"></div>
+                </div>
+                <div class="book" onclick="showRating(this)" onmouseleave="hideRating(this)">
+                    <img src="book4.jpg" alt="Book 4">
+                    <div class="rating"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">New Arrivals</h2>
+            <div class="moving-text">✦ Fresh from the Wizard's Press ✦ Limited Edition Spellbooks ✦ Rare Manuscripts ✦</div>
+            <div class="book-grid">
+                <div class="book" onclick="showRating(this)" onmouseleave="hideRating(this)">
+                    <img src="book5.jpg" alt="Book 5">
+                    <div class="rating"></div>
+                </div>
+                <div class="book" onclick="showRating(this)" onmouseleave="hideRating(this)">
+                    <img src="book6.jpg" alt="Book 6">
+                    <div class="rating"></div>
+                </div>
+                <div class="book" onclick="showRating(this)" onmouseleave="hideRating(this)">
+                    <img src="book7.jpg" alt="Book 7">
+                    <div class="rating"></div>
+                </div>
+                <div class="book" onclick="showRating(this)" onmouseleave="hideRating(this)">
+                    <img src="book8.jpg" alt="Book 8">
+                    <div class="rating"></div>
+                </div>
+                <div class="book" onclick="showRating(this)" onmouseleave="hideRating(this)">
+                    <img src="book9.jpg" alt="Book 9">
+                    <div class="rating"></div>
+                </div>
+                
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title featured-blink">Archmage's Picks</h2>
+            <div class="book-grid">
+                <div class="book" onclick="showRating(this)" onmouseleave="hideRating(this)">
+                    <img src="book11.jpg" alt="Book 11">
+                    <div class="rating"></div>
+                </div>
+                <div class="book" onclick="showRating(this)" onmouseleave="hideRating(this)">
+                    <img src="book12.jpg" alt="Book 12">
+                    <div class="rating"></div>
+                </div>
+                <div class="book" onclick="showRating(this)" onmouseleave="hideRating(this)">
+                    <img src="book13.jpg" alt="Book 13">
+                    <div class="rating"></div>
+                </div>
+                <div class="book" onclick="showRating(this)" onmouseleave="hideRating(this)">
+                    <img src="book14.jpg" alt="Book 14">
+                    <div class="rating"></div>
+                </div>
+                <div class="book" onclick="showRating(this)" onmouseleave="hideRating(this)">
+                    <img src="book15.jpg" alt="Book 15">
+                    <div class="rating"></div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>Contact: Owl Post or Crystal Ball 123-456-7890</p>
+            <p>Payment Methods: Gold Coins, Magic Beans, PayPal</p>
+            <p>Follow Us: Fire Messages | Dream Scrolls | Crystal Network</p>
+            <p>&copy; 2025 The Enchanted Archive. All Spells Reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Create floating books dynamically
+        function createFloatingBooks() {
+            const container = document.querySelector('.magic-header .floating-books');
+            const bookCount = 8;
+            
+            for (let i = 1; i <= bookCount; i++) {
+                const book = document.createElement('div');
+                book.className = 'floating-book';
+                book.style.left = `${Math.random() * 90 + 5}%`;
+                book.style.top = `${Math.random() * 70 + 10}%`;
+                book.style.animationDelay = `${Math.random() * 10}s`;
+                book.style.backgroundImage = `url(book${(i % 10) + 1}.jpg)`;
+                container.appendChild(book);
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createFloatingBooks();
+            
+            // Original rating functions
+            window.showRating = function(bookElement) {
+                let ratingDiv = bookElement.querySelector('.rating');
+                let randomRating = (Math.random() * (5 - 3.5) + 3.5).toFixed(1);
+                ratingDiv.textContent = `★ ${randomRating}/5`;
+                ratingDiv.style.display = 'block';
+            };
+            
+            window.hideRating = function(bookElement) {
+                let ratingDiv = bookElement.querySelector('.rating');
+                ratingDiv.style.display = 'none';
+            };
+
+            // Original flash effect
+            function flashEffect() {
+                let bestSelling = document.querySelector('.best-selling');
+                bestSelling.style.textShadow = '0 0 15px rgba(255,215,0,0.8)';
+                bestSelling.style.transition = 'all 0.5s ease';
+                
+                setTimeout(() => {
+                    bestSelling.style.textShadow = '0 0 10px rgba(255,215,0,0.5)';
+                }, 1000);
+            }
+            setInterval(flashEffect, 5000);
+
+            // Original genre color change
+            function getRandomColor() {
+                const colors = ['#6A0DAD', '#4B0082', '#483D8B', '#4169E1', '#8A2BE2'];
+                return colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            function changeGenreColors() {
+                let genres = document.querySelectorAll('.genre span');
+                genres.forEach(span => {
+                    span.style.backgroundColor = getRandomColor();
+                });
+            }
+            setInterval(changeGenreColors, 2000);
+        });
+    </script>
+</body>
+</html>

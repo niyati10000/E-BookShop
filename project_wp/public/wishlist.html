@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Wishlist - The Book Nook</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f2f5;
+    }
+
+    header {
+      background-color: #2d3436;
+      color: #fff;
+      padding: 25px;
+      font-size: 2em;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+
+    nav {
+      background-color: #636e72;
+      padding: 10px 0;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 0;
+      margin: 0;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    nav ul li a:hover {
+      text-decoration: underline;
+    }
+
+    .wishlist-container {
+      padding: 40px 60px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 30px;
+    }
+
+    .wishlist-item {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+      animation: fadeIn 0.8s ease;
+      position: relative;
+    }
+
+    .wishlist-item:hover {
+      transform: scale(1.03);
+    }
+
+    .wishlist-item img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+
+    .wishlist-info {
+      padding: 15px;
+    }
+
+    .wishlist-info h3 {
+      margin: 0;
+      font-size: 1.2rem;
+      color: #2d3436;
+    }
+
+    .wishlist-info p {
+      margin: 5px 0;
+      color: #636e72;
+      font-size: 0.95rem;
+    }
+
+    .wishlist-actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+
+    .price {
+      color: #0984e3;
+      font-weight: bold;
+    }
+
+    .heart {
+      font-size: 1.5rem;
+      color: #d63031;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .heart:hover {
+      transform: scale(1.3);
+    }
+
+    .wishlist-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+    }
+
+    .wishlist-buttons button {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .wishlist-buttons button:first-child {
+      background-color: #00b894;
+      color: white;
+    }
+
+    .wishlist-buttons button:first-child:hover {
+      background-color: #019875;
+    }
+
+    .wishlist-buttons button:last-child {
+      background-color: #d63031;
+      color: white;
+    }
+
+    .wishlist-buttons button:last-child:hover {
+      background-color: #c0392b;
+    }
+
+    section.cover-upload {
+      padding: 40px;
+      background-color: #dfe6e9;
+      margin-top: 40px;
+    }
+
+    section.cover-upload form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      max-width: 500px;
+      margin: auto;
+    }
+
+    section.cover-upload h2 {
+      text-align: center;
+      font-size: 1.5em;
+      margin-bottom: 20px;
+    }
+
+    section.cover-upload input {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #b2bec3;
+    }
+
+    section.cover-upload button {
+      padding: 10px;
+      background-color: #2c3e50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    section.cover-upload button:hover {
+      background-color: #34495e;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<header>💖 My Wishlist</header>
+
+<nav>
+  <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="login.html">Login</a></li>
+      <li><a href="shop.html">Spellbooks</a></li>
+      <li><a href="Contactus.html">Send Owl</a></li>
+      <li><a href="Aboutus.html">Our Magic</a></li>
+      <li><a href="Mylibrary.html">Tomes</a></li>
+      <li><a href="purchased.html">Artifacts</a></li>
+      <li><a href="wishlist.html">Wish Scroll</a></li>
+      <li><a href="checkout.html">Enchantment</a></li>
+  </ul>
+</nav>
+
+<div class="wishlist-container" id="wishlistContainer">
+  <!-- Wishlist items will be inserted dynamically here -->
+</div>
+
+<!-- Cover Upload Section -->
+<section class="cover-upload">
+  <h2>📚 Add Cover Image to Wishlist Book</h2>
+  <form id="wishlistCoverForm">
+    <label>
+      Book Title:
+      <input type="text" id="wishlistBookTitle" placeholder="Enter book title" required>
+    </label>
+    <label>
+      Cover Image URL:
+      <input type="text" id="wishlistCoverImageUrl" placeholder="Paste image URL" required>
+    </label>
+    <button type="submit">Save Cover</button>
+  </form>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const wishlistContainer = document.getElementById("wishlistContainer");
+    const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+    const covers = JSON.parse(localStorage.getItem("coverImages")) || {};
+
+    if (wishlist.length === 0) {
+      wishlistContainer.innerHTML = "<p style='font-size: 1.2rem;'>Your wishlist is empty 😢</p>";
+      return;
+    }
+
+    wishlist.forEach((item) => {
+      const image = covers[item.title] || item.image || 'default.jpg';
+      const itemHTML = `
+        <div class="wishlist-item" id="item-${item.title.replace(/\s+/g, '-')}" >
+          <img src="${image}" alt="Book Cover">
+          <div class="wishlist-info">
+            <h3>${item.title}</h3>
+            <p>by ${item.author}</p>
+            <div class="wishlist-actions">
+              <span class="price">₹${item.price}</span>
+              <span class="heart" onclick="removeFromWishlist('${item.title}')">❤️</span>
+            </div>
+            <div class="wishlist-buttons">
+              <button onclick="addToCart('${item.title}')">Add to Cart</button>
+              <button onclick="buyNow('${item.title}', this)">Buy Now</button>
+            </div>
+          </div>
+        </div>
+      `;
+      wishlistContainer.insertAdjacentHTML("beforeend", itemHTML);
+    });
+  });
+
+  function removeFromWishlist(title) {
+    let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+    wishlist = wishlist.filter(item => item.title !== title);
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+
+    // Remove from DOM without full reload
+    const itemId = `item-${title.replace(/\s+/g, '-')}`;
+    const itemElem = document.getElementById(itemId);
+    if (itemElem) itemElem.remove();
+
+    if (wishlist.length === 0) {
+      document.getElementById("wishlistContainer").innerHTML = "<p style='font-size: 1.2rem;'>Your wishlist is empty 😢</p>";
+    }
+  }
+
+  function addToCart(title) {
+    const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+    const item = wishlist.find(book => book.title === title);
+    if (item) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart.push(item);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert(`"${title}" added to cart!`);
+    }
+  }
+
+  function buyNow(title) {
+  const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+  const item = wishlist.find(book => book.title === title);
+
+  if (item) {
+    // Prepare clean data
+    const payload = {
+      title: item.title,
+      author: item.author || "Unknown",
+      price: parseFloat(item.price.toString().replace(/[^0-9.]/g, '')),  // removes ₹
+      image: item.image || item.imgSrc || 'default.jpg'
+    };
+
+    fetch('http://localhost:3000/api/purchase', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(response => {
+      if (!response.ok) throw new Error("Failed to purchase");
+      return response.json();
+    })
+    .then(data => {
+      alert(`"${item.title}" has been purchased!`);
+      window.location.href = "checkout.html";
+    })
+    .catch(error => {
+      alert("Error during purchase. Try again.");
+      console.error(error);
+    });
+  }
+}
+
+    const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+    const item = wishlist.find(book => book.title === title);
+
+    if (item) {
+      button.disabled = true;
+      button.textContent = "Processing...";
+
+      fetch('http://localhost:3000/api/purchase', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(item)
+      })
+      .then(response => {
+        if (!response.ok) throw new Error("Failed to purchase");
+        return response.json();
+      })
+      .then(data => {
+        alert(`"${item.title}" has been purchased!`);
+        window.location.href = "checkout.html";
+      })
+      .catch(error => {
+        alert("Error during purchase. Please try again.");
+        console.error(error);
+        button.disabled = false;
+        button.textContent = "Buy Now";
+      });
+    }
+
+  // Save cover image
+  const wishlistCoverForm = document.getElementById("wishlistCoverForm");
+
+  if (wishlistCoverForm) {
+    wishlistCoverForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const title = document.getElementById("wishlistBookTitle").value.trim();
+      const url = document.getElementById("wishlistCoverImageUrl").value.trim();
+
+      let covers = JSON.parse(localStorage.getItem("coverImages")) || {};
+      covers[title] = url;
+      localStorage.setItem("coverImages", JSON.stringify(covers));
+
+      alert("Cover image saved for wishlist book!");
+      wishlistCoverForm.reset();
+    });
+  }
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Library - The Book Nook</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f6f8;
+    }
+
+    header {
+      background-color: #2d3436;
+      color: #fff;
+      padding: 25px;
+      font-size: 2em;
+      text-align: center;
+      letter-spacing: 1px;
+      position: relative;
+    }
+
+    .user-status {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 14px;
+      background: rgba(45, 52, 54, 0.7);
+      padding: 5px 15px;
+      border-radius: 20px;
+    }
+
+    .user-status a {
+      color: #fdcb6e;
+      text-decoration: none;
+      margin-left: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .user-status a:hover {
+      text-shadow: 0 0 8px rgba(253, 203, 110, 0.7);
+    }
+
+    nav {
+      background-color: #636e72;
+      padding: 10px 0;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 0;
+      margin: 0;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    nav ul li a:hover {
+      text-decoration: underline;
+    }
+
+    .library-container {
+      padding: 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+
+    .book-card {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .book-card:hover {
+      transform: scale(1.03);
+    }
+
+    .book-cover {
+      width: 100%;
+      height: 500px;
+      object-fit: contain;
+      background-color: #fff;
+      padding: 10px;
+    }
+
+    .book-info {
+      padding: 15px;
+    }
+
+    .book-info h3 {
+      margin: 0;
+      font-size: 1.2rem;
+      color: #2d3436;
+    }
+
+    .book-info p {
+      margin: 5px 0;
+      color: #636e72;
+      font-size: 0.9rem;
+    }
+
+    /* Admin controls */
+    .admin-controls {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      gap: 5px;
+      z-index: 2;
+    }
+
+    .admin-controls button {
+      background: rgba(255, 255, 255, 0.9);
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .admin-controls button:hover {
+      background: white;
+      transform: scale(1.1);
+    }
+
+    /* Add book form */
+    .add-book-form {
+      background: white;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 600px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      display: none;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    .form-actions {
+      text-align: right;
+      margin-top: 15px;
+    }
+
+    .form-actions button {
+      padding: 8px 15px;
+      margin-left: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .cancel-btn {
+      background: #ddd;
+    }
+
+    .submit-btn {
+      background: #2d3436;
+      color: white;
+    }
+
+    /* Add book button */
+    .add-book-btn-container {
+      text-align: center;
+      margin: 20px 0;
+      display: none;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.8);
+    }
+
+    .modal-content {
+      margin: 5% auto;
+      width: 80%;
+      max-width: 1000px;
+      height: 80vh;
+      background-color: #fff;
+      padding: 0;
+      border-radius: 8px;
+      position: relative;
+    }
+
+    .modal-content iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 8px;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 2rem;
+      color: #fff;
+      cursor: pointer;
+    }
+    
+    /* PDF download button */
+    .pdf-download {
+      display: block;
+      text-align: center;
+      background-color: #2d3436;
+      color: white;
+      padding: 8px;
+      margin-top: 10px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    
+    .pdf-download:hover {
+      background-color: #636e72;
+    }
+  </style>
+</head>
+<body>
+
+<header>📚 My Library
+  <div class="user-status">
+    <span id="userGreeting">Guest</span>
+    <a href="login.html" id="loginLogoutLink">Login</a>
+  </div>
+</header>
+
+<nav>
+  <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="login.html">Login</a></li>
+      <li id="adminNavItem" style="display:none;"><a href="admin.html">Admin Portal</a></li>
+      <li><a href="shop.html">Spellbooks</a></li>
+      <li><a href="Contactus.html">Send Owl</a></li>
+      <li><a href="Aboutus.html">Our Magic</a></li>
+      <li><a href="Mylibrary.html">Tomes</a></li>
+      <li><a href="purchased.html">Artifacts</a></li>
+      <li><a href="wishlist.html">Wish Scroll</a></li>
+      <li><a href="checkout.html">Enchantment</a></li>
+  </ul>
+</nav>
+
+<!-- Add Book Form -->
+<div class="add-book-form" id="addBookForm">
+  <h3>Add New Book to Library</h3>
+  <form id="bookForm">
+    <div class="form-group">
+      <label for="bookTitle">Title</label>
+      <input type="text" id="bookTitle" required>
+    </div>
+    <div class="form-group">
+      <label for="bookAuthor">Author</label>
+      <input type="text" id="bookAuthor" required>
+    </div>
+    <div class="form-group">
+      <label for="bookCover">Cover Image URL</label>
+      <input type="text" id="bookCover" required>
+    </div>
+    <div class="form-group">
+      <label for="bookPDF">PDF File URL</label>
+      <input type="text" id="bookPDF" required>
+    </div>
+    <div class="form-actions">
+      <button type="button" class="cancel-btn" onclick="hideAddBookForm()">Cancel</button>
+      <button type="submit" class="submit-btn">Add Book</button>
+    </div>
+  </form>
+</div>
+
+<!-- Add Book Button -->
+<div class="add-book-btn-container" id="addBookBtnContainer">
+  <button onclick="showAddBookForm()" class="submit-btn">+ Add New Book</button>
+</div>
+
+<div class="library-container" id="libraryContainer">
+  <!-- Books will be loaded dynamically -->
+</div>
+
+<!-- Modal for reading PDF -->
+<div id="pdfModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closePDF()">&times;</span>
+    <iframe id="pdfFrame" src=""></iframe>
+  </div>
+</div>
+
+<script>
+  // Library data
+  let libraryBooks = [
+    {
+      id: 1,
+      title: "The Midnight Library",
+      author: "Matt Haig",
+      cover: "midnight.jpg",
+      pdf: "midnight.pdf"
+    },
+    {
+      id: 2,
+      title: "You Are a Badass",
+      author: "Jen Sincero",
+      cover: "you.png",
+      pdf: "you.pdf"
+    },
+    {
+      id: 3,
+      title: "The Silent Patient",
+      author: "Alex Michaelides",
+      cover: "slient.jpg",
+      pdf: "slient.pdf"
+    }
+  ];
+
+  // Check login status
+  function checkLoginStatus() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const loggedIn = urlParams.get('loggedIn');
+    const userType = urlParams.get('userType');
+    const greeting = document.getElementById('userGreeting');
+    const loginLink = document.getElementById('loginLogoutLink');
+    const adminNavItem = document.getElementById('adminNavItem');
+    const addBookBtnContainer = document.getElementById('addBookBtnContainer');
+
+    if (loggedIn === 'true') {
+      if (userType === 'admin') {
+        greeting.textContent = 'Archmage';
+        adminNavItem.style.display = 'block';
+        addBookBtnContainer.style.display = 'block';
+      } else {
+        greeting.textContent = 'Apprentice';
+      }
+      loginLink.textContent = 'Logout';
+      loginLink.href = 'index.html?logout=true';
+    } else if (urlParams.has('logout')) {
+      greeting.textContent = 'Guest';
+      loginLink.textContent = 'Login';
+      loginLink.href = 'login.html';
+      adminNavItem.style.display = 'none';
+      addBookBtnContainer.style.display = 'none';
+    }
+  }
+
+  // Render books based on user type
+  function renderBooks() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const userType = urlParams.get('userType');
+    const isAdmin = userType === 'admin';
+    
+    const libraryContainer = document.getElementById('libraryContainer');
+    libraryContainer.innerHTML = '';
+    
+    libraryBooks.forEach(book => {
+      const bookCard = document.createElement('div');
+      bookCard.className = 'book-card';
+      
+      // Admin controls
+      if (isAdmin) {
+        bookCard.innerHTML += `
+          <div class="admin-controls">
+            <button onclick="event.stopPropagation(); editBook(${book.id})">✏️</button>
+            <button onclick="event.stopPropagation(); deleteBook(${book.id})">🗑️</button>
+          </div>
+        `;
+      }
+      
+      // Book content
+      bookCard.innerHTML += `
+        <img class="book-cover" src="${book.cover}" alt="${book.title} Cover">
+        <div class="book-info">
+          <h3>${book.title}</h3>
+          <p>by ${book.author}</p>
+          <a href="${book.pdf}" class="pdf-download" download="${book.title} - ${book.author}.pdf">Download PDF</a>
+          <button onclick="openPDF('${book.pdf}')" class="pdf-download">Read Online</button>
+        </div>
+      `;
+      
+      libraryContainer.appendChild(bookCard);
+    });
+  }
+
+  // Book management functions
+  function showAddBookForm() {
+    document.getElementById('addBookForm').style.display = 'block';
+    document.getElementById('bookForm').onsubmit = function(e) {
+      e.preventDefault();
+      addNewBook();
+    };
+  }
+
+  function hideAddBookForm() {
+    document.getElementById('addBookForm').style.display = 'none';
+    document.getElementById('bookForm').reset();
+  }
+
+  function addNewBook() {
+    const newBook = {
+      id: libraryBooks.length + 1,
+      title: document.getElementById('bookTitle').value,
+      author: document.getElementById('bookAuthor').value,
+      cover: document.getElementById('bookCover').value,
+      pdf: document.getElementById('bookPDF').value
+    };
+    
+    libraryBooks.push(newBook);
+    renderBooks();
+    hideAddBookForm();
+  }
+
+  function editBook(bookId) {
+    const book = libraryBooks.find(b => b.id === bookId);
+    if (!book) return;
+    
+    document.getElementById('bookTitle').value = book.title;
+    document.getElementById('bookAuthor').value = book.author;
+    document.getElementById('bookCover').value = book.cover;
+    document.getElementById('bookPDF').value = book.pdf;
+    
+    document.getElementById('bookForm').onsubmit = function(e) {
+      e.preventDefault();
+      
+      book.title = document.getElementById('bookTitle').value;
+      book.author = document.getElementById('bookAuthor').value;
+      book.cover = document.getElementById('bookCover').value;
+      book.pdf = document.getElementById('bookPDF').value;
+      
+      renderBooks();
+      hideAddBookForm();
+    };
+    
+    showAddBookForm();
+  }
+
+  function deleteBook(bookId) {
+    if (confirm('Are you sure you want to remove this book from the library?')) {
+      libraryBooks = libraryBooks.filter(book => book.id !== bookId);
+      renderBooks();
+    }
+  }
+
+  // PDF viewer functions
+  function openPDF(file) {
+    document.getElementById("pdfModal").style.display = "block";
+    document.getElementById("pdfFrame").src = file;
+  }
+
+  function closePDF() {
+    document.getElementById("pdfModal").style.display = "none";
+    document.getElementById("pdfFrame").src = "";
+  }
+
+  // Initialize
+  document.addEventListener('DOMContentLoaded', function() {
+    checkLoginStatus();
+    renderBooks();
+    
+    // Close modal on outside click
+    window.onclick = function(event) {
+      const modal = document.getElementById("pdfModal");
+      if (event.target === modal) {
+        closePDF();
+      }
+    };
+  });
+</script>
+
+</body>
+</html>

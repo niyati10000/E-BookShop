@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Purchased Books - The Book Nook</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f7f8fa;
+    }
+
+    header {
+      background-color: #2d3436;
+      color: #fff;
+      padding: 25px;
+      font-size: 2em;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+
+    nav {
+      background-color: #636e72;
+      padding: 10px 0;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 0;
+      margin: 0;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    nav ul li a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      padding: 40px 60px;
+    }
+
+    .purchase-card {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      display: flex;
+      margin-bottom: 30px;
+      overflow: hidden;
+      animation: slideIn 0.8s ease;
+      transition: transform 0.3s ease;
+    }
+
+    .purchase-card:hover {
+      transform: scale(1.02);
+    }
+
+    .book-cover {
+      width: 180px;
+      height: 250px;
+      object-fit: cover;
+      border-right: 2px solid #eee;
+    }
+
+    .purchase-details {
+      padding: 20px;
+      flex: 1;
+    }
+
+    .purchase-details h2 {
+      margin-top: 0;
+      color: #2d3436;
+    }
+
+    .purchase-details p {
+      margin: 8px 0;
+      color: #555;
+    }
+
+    .status {
+      padding: 5px 12px;
+      background-color: #00b894;
+      color: white;
+      border-radius: 20px;
+      display: inline-block;
+      font-size: 0.9em;
+      margin-top: 10px;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<header>📦 Your Purchased Books</header>
+
+<nav>
+  <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="login.html">Login</a></li>
+      <li><a href="shop.html">Spellbooks</a></li>
+      <li><a href="Contactus.html">Send Owl</a></li>
+      <li><a href="Aboutus.html">Our Magic</a></li>
+      <li><a href="Mylibrary.html">Tomes</a></li>
+      <li><a href="purchased.html">Artifacts</a></li>
+      <li><a href="wishlist.html">Wish Scroll</a></li>
+      <li><a href="checkout.html">Enchantment</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+  <!-- Purchase 1 -->
+  <div class="purchase-card">
+    <img src="midnight.jpg" alt="Book Cover" class="book-cover">
+    <div class="purchase-details">
+      <h2>The Midnight Library</h2>
+      <p><strong>Author:</strong> Matt Haig</p>
+      <p><strong>Order ID:</strong> #BK234567</p>
+      <p><strong>Purchased On:</strong> 20 March 2025</p>
+      <p><strong>Delivery Status:</strong> Delivered on 24 March 2025</p>
+      <span class="status">Delivered</span>
+    </div>
+  </div>
+
+  <!-- Purchase 2 -->
+  <div class="purchase-card">
+    <img src="slient.jpg" alt="Book Cover" class="book-cover">
+    <div class="purchase-details">
+      <h2>The Silent Patient</h2>
+      <p><strong>Author:</strong> Alex Michaelides</p>
+      <p><strong>Order ID:</strong> #BK239891</p>
+      <p><strong>Purchased On:</strong> 5 April 2025</p>
+      <p><strong>Delivery Status:</strong> Out for Delivery</p>
+      <span class="status" style="background-color: #e67e22;">Out for Delivery</span>
+    </div>
+  </div>
+
+  <!-- Purchase 3 -->
+  <div class="purchase-card">
+    <img src="jobs.jpg" alt="Book Cover" class="book-cover">
+    <div class="purchase-details">
+      <h2>Steve Jobs</h2>
+      <p><strong>Author:</strong> Walter Isaacson</p>
+      <p><strong>Order ID:</strong> #BK245678</p>
+      <p><strong>Purchased On:</strong> 1 March 2025</p>
+      <p><strong>Delivery Status:</strong> Delivered on 4 March 2025</p>
+      <span class="status">Delivered</span>
+    </div>
+  </div>
+
+  <!-- Add more cards if needed -->
+</div>
+
+</body>
+</html>

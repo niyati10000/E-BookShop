@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Checkout - The Book Nook</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f6fa;
+      color: #2d3436;
+    }
+
+    header {
+      background: #2d3436;
+      color: white;
+      padding: 25px;
+      font-size: 2em;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      position: relative;
+    }
+
+    .user-status {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: white;
+      font-size: 14px;
+      background: rgba(45, 52, 54, 0.7);
+      padding: 5px 15px;
+      border-radius: 20px;
+    }
+
+    .user-status a {
+      color: #00cec9;
+      text-decoration: none;
+      margin-left: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .user-status a:hover {
+      text-shadow: 0 0 8px rgba(0, 206, 201, 0.7);
+    }
+
+    nav {
+      background-color: #636e72;
+      padding: 12px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    nav ul li a:hover {
+      text-decoration: underline;
+      color: #00cec9;
+    }
+
+    .checkout-container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 30px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .checkout-container:hover {
+      transform: scale(1.01);
+    }
+
+    h2 {
+      text-align: center;
+      color: #6c5ce7;
+      margin-bottom: 20px;
+    }
+
+    .section {
+      margin-top: 30px;
+    }
+
+    .summary ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .summary li {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #dfe6e9;
+      font-size: 1.1rem;
+    }
+
+    .summary p {
+      text-align: right;
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      width: 100%;
+      margin-top: 8px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .payment-methods label {
+      display: block;
+      margin: 12px 0;
+      font-size: 1rem;
+    }
+
+    .place-order button {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(to right, #00b894, #6c5ce7);
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 25px;
+      transition: background 0.3s;
+    }
+
+    .place-order button:hover {
+      background: linear-gradient(to right, #6c5ce7, #00b894);
+    }
+
+    /* Admin Section Styles */
+    .admin-dashboard {
+      display: none;
+      margin-top: 40px;
+    }
+
+    .admin-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #6c5ce7;
+      margin-bottom: 5px;
+    }
+
+    .stat-label {
+      color: #636e72;
+      font-size: 0.9rem;
+    }
+
+    .recent-orders {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .order-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #dfe6e9;
+    }
+
+    .order-item:last-child {
+      border-bottom: none;
+    }
+
+    .order-id {
+      font-weight: bold;
+      color: #2d3436;
+    }
+
+    .order-customer {
+      color: #636e72;
+    }
+
+    .order-amount {
+      font-weight: bold;
+    }
+
+    .order-status {
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+    }
+
+    .status-delivered {
+      background: #00b894;
+      color: white;
+    }
+
+    .status-shipped {
+      background: #0984e3;
+      color: white;
+    }
+
+    .status-processing {
+      background: #fdcb6e;
+      color: #2d3436;
+    }
+
+    .status-pending {
+      background: #d63031;
+      color: white;
+    }
+
+    @media screen and (max-width: 600px) {
+      nav ul {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .checkout-container {
+        margin: 20px;
+        padding: 20px;
+      }
+
+      .admin-stats {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>🛍️ Checkout
+  <div class="user-status">
+    <span id="userGreeting">Guest</span>
+    <a href="login.html" id="loginLogoutLink">Login</a>
+  </div>
+</header>
+
+<nav>
+  <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="login.html">Login</a></li>
+      <li id="adminNavItem" style="display:none;"><a href="admin.html">Admin Portal</a></li>
+      <li><a href="shop.html">Spellbooks</a></li>
+      <li><a href="Contactus.html">Send Owl</a></li>
+      <li><a href="Aboutus.html">Our Magic</a></li>
+      <li><a href="Mylibrary.html">Tomes</a></li>
+      <li><a href="purchased.html">Artifacts</a></li>
+      <li><a href="wishlist.html">Wish Scroll</a></li>
+      <li><a href="checkout.html">Enchantment</a></li>
+  </ul>
+</nav>
+
+<div class="checkout-container">
+  <!-- User Checkout Section (shown to regular users) -->
+  <div id="userCheckoutSection">
+    <h2>Order Summary</h2>
+    <div class="summary section">
+      <ul id="orderSummary">
+        <!-- Dynamic Items -->
+      </ul>
+      <p>Total: ₹<span id="totalAmount">0</span></p>
+    </div>
+
+    <div class="extras section">
+      <label>Apply Coupon Code:
+        <input type="text" id="coupon" placeholder="Enter coupon code" />
+      </label>
+      <label>Gift Card Code:
+        <input type="text" id="giftcard" placeholder="Enter gift card" />
+      </label>
+    </div>
+
+    <div class="payment-methods section">
+      <h3>Choose Payment Method</h3>
+      <label><input type="radio" name="payment" value="Credit Card" checked> Credit/Debit Card</label>
+      <label><input type="radio" name="payment" value="UPI"> UPI (Google Pay, PhonePe)</label>
+      <label><input type="radio" name="payment" value="Net Banking"> Net Banking</label>
+      <label><input type="radio" name="payment" value="Cash on Delivery"> Cash on Delivery</label>
+    </div>
+
+    <div class="place-order section">
+      <button onclick="placeOrder()">Place Order</button>
+    </div>
+  </div>
+
+  <!-- Admin Dashboard Section (shown only to admins) -->
+  <div id="adminDashboard" class="admin-dashboard">
+    <h2>Admin Dashboard</h2>
+    
+    <div class="admin-stats section">
+      <div class="stat-card">
+        <div class="stat-value" id="totalOrders">128</div>
+        <div class="stat-label">Total Orders</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="todayOrders">9</div>
+        <div class="stat-label">Today's Orders</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="totalRevenue">₹42,850</div>
+        <div class="stat-label">Total Revenue</div>
+      </div>
+    </div>
+
+    <div class="recent-orders section">
+      <h3>Recent Orders</h3>
+      <div id="recentOrdersList">
+        <div class="order-item">
+          <div>
+            <span class="order-id">#ENCH-7854</span>
+            <span class="order-customer"> - Merlin Ambrosius</span>
+          </div>
+          <div>
+            <span class="order-amount">₹2,499</span>
+            <span class="order-status status-delivered">Delivered</span>
+          </div>
+        </div>
+        <div class="order-item">
+          <div>
+            <span class="order-id">#ENCH-7853</span>
+            <span class="order-customer"> - Morgana Le Fay</span>
+          </div>
+          <div>
+            <span class="order-amount">₹1,799</span>
+            <span class="order-status status-shipped">Shipped</span>
+          </div>
+        </div>
+        <div class="order-item">
+          <div>
+            <span class="order-id">#ENCH-7852</span>
+            <span class="order-customer"> - Gandalf the Grey</span>
+          </div>
+          <div>
+            <span class="order-amount">₹3,245</span>
+            <span class="order-status status-processing">Processing</span>
+          </div>
+        </div>
+        <div class="order-item">
+          <div>
+            <span class="order-id">#ENCH-7851</span>
+            <span class="order-customer"> - Albus Dumbledore</span>
+          </div>
+          <div>
+            <span class="order-amount">₹1,125</span>
+            <span class="order-status status-pending">Pending</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  async function fetchPurchases() {
+    try {
+      const response = await fetch('http://localhost:3000/api/purchases');
+      const purchases = await response.json();
+      const orderList = document.getElementById("orderSummary");
+      const totalDisplay = document.getElementById("totalAmount");
+
+      if (!orderList || !totalDisplay) return;
+
+      orderList.innerHTML = '';
+      let total = 0;
+
+      purchases.slice().reverse().forEach(purchase => {
+        const li = document.createElement('li');
+        li.innerHTML = `<span>${purchase.title}</span><span>₹${parseFloat(purchase.price).toFixed(2)}</span>`;
+        orderList.appendChild(li);
+        total += parseFloat(purchase.price);
+      });
+
+      totalDisplay.textContent = total.toFixed(2);
+    } catch (error) {
+      console.error('Error fetching purchases:', error);
+    }
+  }
+
+  // Check login and switch view
+  function checkLoginStatus() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const loggedIn = urlParams.get('loggedIn');
+    const userType = urlParams.get('userType');
+
+    const greeting = document.getElementById('userGreeting');
+    const loginLink = document.getElementById('loginLogoutLink');
+    const adminNavItem = document.getElementById('adminNavItem');
+    const userSection = document.getElementById('userCheckoutSection');
+    const adminSection = document.getElementById('adminDashboard');
+
+    if (loggedIn === 'true') {
+      if (userType === 'admin') {
+        greeting.textContent = 'Archmage';
+        adminNavItem.style.display = 'block';
+        userSection.style.display = 'none';
+        adminSection.style.display = 'block';
+      } else {
+        greeting.textContent = 'Apprentice';
+        userSection.style.display = 'block';
+        adminSection.style.display = 'none';
+      }
+      loginLink.textContent = 'Logout';
+      loginLink.href = 'index.html?logout=true';
+    } else if (urlParams.has('logout')) {
+      greeting.textContent = 'Guest';
+      loginLink.textContent = 'Login';
+      loginLink.href = 'login.html';
+      adminNavItem.style.display = 'none';
+      userSection.style.display = 'block';
+      adminSection.style.display = 'none';
+    }
+  }
+
+  // Place order
+  function placeOrder() {
+    const paymentMethod = document.querySelector("input[name='payment']:checked");
+    if (!paymentMethod) {
+      alert("Please select a payment method.");
+      return;
+    }
+
+    alert(`Your order has been placed using ${paymentMethod.value}! Thank you for shopping at The Book Nook.`);
+
+    // Clear temporary data
+    localStorage.removeItem("buyNowItem");
+    localStorage.removeItem("wishlistItem");
+    localStorage.removeItem("cart");
+
+    // Optional: refresh purchase view or redirect
+    window.location.href = "index.html";
+  }
+
+  // On page load
+  document.addEventListener("DOMContentLoaded", function () {
+    checkLoginStatus();
+    fetchPurchases();
+
+    const placeOrderBtn = document.getElementById('placeOrderBtn');
+    if (placeOrderBtn) {
+      placeOrderBtn.addEventListener('click', placeOrder);
+    }
+  });
+</script>
+
+
+</body>
+</html>

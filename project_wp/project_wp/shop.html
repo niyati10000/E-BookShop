@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Shop</title>
+    <style>
+       body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color:#2d3436;
+    color: #f6f6f3;
+    padding: 20px 40px;
+    text-align: center;
+    font-size: 2em;
+}
+
+nav {
+    background-color:#636e72;
+    padding: 10px 0;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #16121f;
+}
+
+.book-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    padding: 40px;
+}
+
+.book {
+    background-color: white;
+    padding: 15px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.book img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.4s ease;
+}
+
+.book:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+.book:hover img {
+    transform: scale(1.1);
+}
+
+.price {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 20px;
+    transition: transform 0.4s ease;
+    font-weight: bold;
+}
+
+.book.clicked .price {
+    transform: translateX(-50%) scale(1);
+}
+
+.title {
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.wishlist-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    font-size: 1.2rem;
+    color: #e74c3c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    transition: background 0.3s ease;
+}
+
+.wishlist-btn:hover {
+    background: rgba(255, 255, 255, 1);
+}
+
+.wishlist-btn.saved::before {
+    content: '❤️';
+}
+
+.wishlist-btn::before {
+    content: '🤍';
+}
+
+.buy-now {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #411366;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.buy-now:hover {
+    background-color: #301f3c;
+}
+
+    </style>
+</head>
+<body>
+
+<header> Welcome to The Book Nook - Shop</header>
+
+<nav>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="shop.html">Spellbooks</a></li>
+        <li><a href="Contactus.html">Send Owl</a></li>
+        <li><a href="Aboutus.html">Our Magic</a></li>
+        <li><a href="Mylibrary.html">Tomes</a></li>
+        <li><a href="purchased.html">Artifacts</a></li>
+        <li><a href="wishlist.html">Wish Scroll</a></li>
+        <li><a href="checkout.html">Enchantment</a></li>
+    </ul>
+</nav>
+
+<div class="book-grid" id="bookGrid">
+    <!-- Static books -->
+    <div class="book" onclick="togglePrice(this)">
+        <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(this)"></button>
+        <img src="sun.jpg" alt="Book">
+        <div class="title">The Rising Sun</div>
+        <div class="price">₹1299</div>
+        <button class="buy-now" onclick="event.stopPropagation(); window.location.href='checkout.html'">Buy Now</button>
+
+    </div>
+
+    <div class="book" onclick="togglePrice(this)">
+        <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(this)"></button>
+        <img src="into.jpg" alt="Book">
+        <div class="title">Into the Wild</div>
+        <div class="price">₹1499</div>
+        <button class="buy-now" onclick="event.stopPropagation(); window.location.href='checkout.html'">Buy Now</button>
+
+    </div>
+
+    <div class="book" onclick="togglePrice(this)">
+        <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(this)"></button>
+        <img src="echoes.jpg" alt="Book">
+        <div class="title">Echoes of Silence</div>
+        <div class="price">₹950</div>
+        <button class="buy-now" onclick="event.stopPropagation(); window.location.href='checkout.html'">Buy Now</button>
+
+    </div>
+
+    <div class="book" onclick="togglePrice(this)">
+        <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(this)"></button>
+        <img src="dream.jpg" alt="Book">
+        <div class="title">Dreamcatcher</div>
+        <div class="price">₹1125</div>
+        <button class="buy-now" onclick="event.stopPropagation(); window.location.href='checkout.html'">Buy Now</button>
+
+    </div>
+
+    <div class="book" onclick="togglePrice(this)">
+        <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(this)"></button>
+        <img src="river.jpg" alt="Book">
+        <div class="title">Mystic River</div>
+        <div class="price">₹1345</div>
+        <button class="buy-now" onclick="event.stopPropagation(); window.location.href='checkout.html'">Buy Now</button>
+
+    </div>
+<!-- 6 -->
+<div class="book" onclick="togglePrice(this)">
+    <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(this)"></button>
+    <img src="gene.jpg" alt="Book">
+    <div class="title">The Gene Whisper</div>
+    <div class="price">₹1120</div>
+    <button class="buy-now" onclick="event.stopPropagation(); window.location.href='checkout.html'">Buy Now</button>
+</div>
+
+<!-- 7 -->
+<div class="book" onclick="togglePrice(this)">
+    <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(this)"></button>
+    <img src="brian.jpg" alt="Book">
+    <div class="title">Inside the Mind</div>
+    <div class="price">₹1100</div>
+    <button class="buy-now" onclick="event.stopPropagation(); window.location.href='checkout.html'">Buy Now</button>
+</div>
+
+<!-- 8 -->
+<div class="book" onclick="togglePrice(this)">
+    <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(this)"></button>
+    <img src="daring.jpg" alt="Book">
+    <div class="title">Daring Greatly</div>
+    <div class="price">₹1145</div>
+    <button class="buy-now" onclick="event.stopPropagation(); window.location.href='checkout.html'">Buy Now</button>
+</div>
+
+<!-- 9 -->
+<div class="book" onclick="togglePrice(this)">
+    <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(this)"></button>
+    <img src="anne.jpg" alt="Book">
+    <div class="title">Anne’s Diary</div>
+    <div class="price">₹1085</div>
+    <button class="buy-now" onclick="event.stopPropagation(); window.location.href='checkout.html'">Buy Now</button>
+</div>
+
+<!-- 10 -->
+<div class="book" onclick="togglePrice(this)">
+    <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(this)"></button>
+    <img src="brunt.jpg" alt="Book">
+    <div class="title">Tell the Wolves I'm Home</div>
+    <div class="price">₹1150</div>
+    <button class="buy-now" onclick="event.stopPropagation(); window.location.href='checkout.html'">Buy Now</button>
+</div>
+
+<!-- 11 -->
+<div class="book" onclick="togglePrice(this)">
+    <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(this)"></button>
+    <img src="cafe.jpg" alt="Book">
+    <div class="title">The Café Chronicles</div>
+    <div class="price">₹990</div>
+    <button class="buy-now" onclick="event.stopPropagation(); window.location.href='checkout.html'">Buy Now</button>
+</div>
+
+<!-- 12 -->
+<div class="book" onclick="togglePrice(this)">
+    <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(this)"></button>
+    <img src="einstein.jpg" alt="Book">
+    <div class="title">Einstein: The Curious Mind</div>
+    <div class="price">₹1190</div>
+    <button class="buy-now" onclick="event.stopPropagation(); window.location.href='checkout.html'">Buy Now</button>
+</div>
+
+<!-- 13 -->
+<div class="book" onclick="togglePrice(this)">
+    <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(this)"></button>
+    <img src="hooked.jpg" alt="Book">
+    <div class="title">Hooked: How to Build Habit-Forming Products</div>
+    <div class="price">₹1050</div>
+    <button class="buy-now" onclick="event.stopPropagation(); window.location.href='checkout.html'">Buy Now</button>
+</div>
+
+<!-- 14 -->
+<div class="book" onclick="togglePrice(this)">
+    <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(this)"></button>
+    <img src="humankind.jpg" alt="Book">
+    <div class="title">Humankind: A Hopeful History</div>
+    <div class="price">₹1125</div>
+    <button class="buy-now" onclick="event.stopPropagation(); window.location.href='checkout.html'">Buy Now</button>
+</div>
+
+<!-- 15 -->
+<div class="book" onclick="togglePrice(this)">
+    <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(this)"></button>
+    <img src="kindred.jpg" alt="Book">
+    <div class="title">Kindred Souls</div>
+    <div class="price">₹1110</div>
+    <button class="buy-now" onclick="event.stopPropagation(); window.location.href='checkout.html'">Buy Now</button>
+</div>
+
+<!-- 16 -->
+<div class="book" onclick="togglePrice(this)">
+    <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(this)"></button>
+    <img src="michele.jpg" alt="Book">
+    <div class="title">Becoming Michelle</div>
+    <div class="price">₹1180</div>
+    <button class="buy-now" onclick="event.stopPropagation(); window.location.href='checkout.html'">Buy Now</button>
+</div>
+
+<!-- 17 -->
+<div class="book" onclick="togglePrice(this)">
+    <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(this)"></button>
+    <img src="nelson.jpg" alt="Book">
+    <div class="title">Mandela: Long Walk to Freedom</div>
+    <div class="price">₹1165</div>
+    <button class="buy-now" onclick="event.stopPropagation(); window.location.href='checkout.html'">Buy Now</button>
+</div>
+
+<!-- 18 -->
+<div class="book" onclick="togglePrice(this)">
+    <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(this)"></button>
+    <img src="of.jpg" alt="Book">
+    <div class="title">Of Mice and Men</div>
+    <div class="price">₹980</div>
+    <button class="buy-now" onclick="event.stopPropagation(); window.location.href='checkout.html'">Buy Now</button>
+</div>
+
+<!-- 19 -->
+<div class="book" onclick="togglePrice(this)">
+    <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(this)"></button>
+    <img src="power.jpg" alt="Book">
+    <div class="title">The Power of Now</div>
+    <div class="price">₹1020</div>
+    <button class="buy-now" onclick="event.stopPropagation(); window.location.href='checkout.html'">Buy Now</button>
+</div>
+
+<!-- 20 -->
+<div class="book" onclick="togglePrice(this)">
+    <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(this)"></button>
+    <img src="hill.jpg" alt="Book">
+    <div class="title">Think and Grow Rich</div>
+    <div class="price">₹1045</div>
+    <button class="buy-now" onclick="event.stopPropagation(); window.location.href='checkout.html'">Buy Now</button>
+</div>
+
+<!-- 21 -->
+<div class="book" onclick="togglePrice(this)">
+    <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(this)"></button>
+    <img src="moonlight.jpg" alt="Book">
+    <div class="title">Moonlight Tales</div>
+    <div class="price">₹1070</div>
+    <button class="buy-now" onclick="event.stopPropagation(); window.location.href='checkout.html'">Buy Now</button>
+</div>
+
+<!-- 22 -->
+<div class="book" onclick="togglePrice(this)">
+    <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(this)"></button>
+    <img src="mary.jpg" alt="Book">
+    <div class="title">Mary: The Untold Story</div>
+    <div class="price">₹1000</div>
+    <button class="buy-now" onclick="event.stopPropagation(); window.location.href='checkout.html'">Buy Now</button>
+</div>
+
+<!-- 23 -->
+<div class="book" onclick="togglePrice(this)">
+    <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(this)"></button>
+    <img src="atomic.jpg" alt="Book">
+    <div class="title">Atomic Habits</div>
+    <div class="price">₹1170</div>
+    <button class="buy-now" onclick="event.stopPropagation(); window.location.href='checkout.html'">Buy Now</button>
+</div>
+
+<!-- 24 -->
+<div class="book" onclick="togglePrice(this)">
+    <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(this)"></button>
+    <img src="binding.jpg" alt="Book">
+    <div class="title">The Binding</div>
+    <div class="price">₹1095</div>
+    <button class="buy-now" onclick="event.stopPropagation(); window.location.href='checkout.html'">Buy Now</button>
+</div>
+<!-- 25 -->
+<div class="book" onclick="togglePrice(this)">
+    <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(this)"></button>
+    <img src="dream.jpg" alt="Book">
+    <div class="title">In the fantancies</div>
+    <div class="price">₹1486</div>
+    <button class="buy-now" onclick="event.stopPropagation(); window.location.href='checkout.html'">Buy Now</button>
+</div>
+<!-- 26 -->
+<div class="book" onclick="togglePrice(this)">
+    <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(this)"></button>
+    <img src="hurry.jpg" alt="Book">
+    <div class="title">hurranice </div>
+    <div class="price">₹1647</div>
+    <button class="buy-now" onclick="event.stopPropagation(); window.location.href='checkout.html'">Buy Now</button>
+</div>
+<!-- 27 -->
+<div class="book" onclick="togglePrice(this)">
+    <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(this)"></button>
+    <img src="love.jpg" alt="Book">
+    <div class="title">love Eternity</div>
+    <div class="price">₹1985</div>
+    <button class="buy-now" onclick="event.stopPropagation(); window.location.href='checkout.html'">Buy Now</button>
+</div>
+<!-- 28 -->
+<div class="book" onclick="togglePrice(this)">
+    <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(this)"></button>
+    <img src="immortal.jpg" alt="Book">
+    <div class="title">The Binding</div>
+    <div class="price">₹1555</div>
+    <button class="buy-now" onclick="event.stopPropagation(); window.location.href='checkout.html'">Buy Now</button>
+</div>
+
+
+
+    <!-- Dynamic books -->
+    <script>
+        for (let i = 21; i <= 20; i++) {
+            document.write(`
+                <div class="book" onclick="togglePrice(this)">
+                    <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(this)"></button>
+                    <img src="https://source.unsplash.com/200x250/?book,${i}" alt="Book">
+                    <div class="title">Book Title ${i}</div>
+                    <div class="price">$${(10 + i).toFixed(2)}</div>
+                </div>
+            `);
+        }
+    </script>
+</div>
+
+<script>
+    function togglePrice(bookElement) {
+        bookElement.classList.toggle('clicked');
+    }
+
+    function toggleWishlist(btn) {
+        btn.classList.toggle('saved');
+
+        const book = btn.closest('.book');
+        const title = book.querySelector('.title').innerText;
+        const imgSrc = book.querySelector('img').src;
+        const price = book.querySelector('.price').innerText;
+
+        const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+
+        const exists = wishlist.find(b => b.title === title);
+        if (exists) {
+            // Remove from wishlist
+            const updated = wishlist.filter(b => b.title !== title);
+            localStorage.setItem('wishlist', JSON.stringify(updated));
+        } else {
+            // Add to wishlist
+            wishlist.push({ title, imgSrc, price });
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+        }
+    }
+</script>
+
+</body>
+</html>

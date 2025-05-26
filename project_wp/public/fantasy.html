@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fantasy Worlds</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Cinzel Decorative', cursive;
+      background: radial-gradient(circle at center, #1c0032, #000000);
+      color: #f9e5ff;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: linear-gradient(to right, #d4cde3, #7209b7);
+      color: #fff8ff;
+      padding: 50px;
+      text-align: center;
+      box-shadow: 0 0 40px #9d4edd;
+      position: relative;
+      z-index: 1;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 3.5em;
+      text-shadow: 4px 4px 12px #000;
+    }
+
+    header p {
+      font-size: 1.3em;
+      font-style: italic;
+      text-shadow: 2px 2px 6px #000;
+    }
+
+    section {
+      padding: 50px 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .book-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+    }
+
+    .book {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 15px;
+      border-radius: 20px;
+      box-shadow: 0 0 25px #c77dff;
+      transition: transform 0.6s ease, box-shadow 0.6s ease;
+      animation: floatFade 1.5s ease-out forwards;
+      opacity: 0;
+      transform: translateY(40px) scale(0.95);
+      position: relative;
+    }
+
+    .book:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 0 35px #ff6fff, 0 0 10px #e0aaff inset;
+    }
+
+    .book img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+    .book h3 {
+      text-align: center;
+      margin-top: 12px;
+      color: #f3c4ff;
+      text-shadow: 1px 1px 5px #000;
+    }
+
+    footer {
+      background-color: #3c096c;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 1.1em;
+    }
+
+    @keyframes floatFade {
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Magical Sparkles */
+    .sparkles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: radial-gradient(circle, #ffffff 0%, transparent 70%);
+      border-radius: 50%;
+      animation: sparkleFloat 8s linear infinite;
+      opacity: 0.7;
+      filter: blur(1px);
+    }
+
+    @keyframes sparkleFloat {
+      0% {
+        transform: translateY(0) scale(0.6) rotate(0deg);
+        opacity: 0;
+      }
+      40% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-1200px) scale(1.2) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Enchanting stars on body */
+    body::before {
+      content: '';
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: url('https://www.transparenttextures.com/patterns/stardust.png');
+      opacity: 0.1;
+      z-index: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sparkles"></div>
+
+  <header>
+    <h1>Fantasy Worlds</h1>
+    <p>Escape into magical realms of imagination</p>
+  </header>
+
+  <section>
+    <div class="book-grid">
+      <div class="book" style="animation-delay: 0.2s;">
+        <img src="binding.jpg" alt="Fantasy Book 1">
+        <h3>The Dragon's Curse</h3>
+      </div>
+      <div class="book" style="animation-delay: 0.4s;">
+        <img src="terry.jpg" alt="Fantasy Book 2">
+        <h3>Shadow Realm</h3>
+      </div>
+      <div class="book" style="animation-delay: 0.6s;">
+        <img src="brian.jpg" alt="Fantasy Book 3">
+        <h3>Chronicles of Elara</h3>
+      </div>
+      <div class="book" style="animation-delay: 0.8s;">
+        <img src="demon.jpg" alt="Fantasy Book 4">
+        <h3>The Enchanted Blade</h3>
+      </div>
+      <div class="book" style="animation-delay: 1s;">
+        <img src="kindred.jpg" alt="Fantasy Book 5">
+        <h3>Kingdom of Fire</h3>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 The Book Nook - Fantasy Genre
+  </footer>
+
+  <script>
+    // Generate 50 sparkles
+    const sparklesContainer = document.querySelector('.sparkles');
+    for (let i = 0; i < 50; i++) {
+      const sparkle = document.createElement('div');
+      sparkle.className = 'sparkle';
+      sparkle.style.left = Math.random() * 100 + 'vw';
+      sparkle.style.top = (Math.random() * 100 + 100) + 'vh';
+      sparkle.style.animationDelay = Math.random() * 6 + 's';
+      sparklesContainer.appendChild(sparkle);
+    }
+  </script>
+
+</body>
+</html>

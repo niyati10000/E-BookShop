@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Checkout - The Book Nook</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f6fa;
+      color: #2d3436;
+    }
+
+    header {
+      background: #2d3436;
+      color: white;
+      padding: 25px;
+      font-size: 2em;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    nav {
+      background-color: #636e72;
+      padding: 12px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    nav ul li a:hover {
+      text-decoration: underline;
+      color: #00cec9;
+    }
+
+    .checkout-container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 30px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .checkout-container:hover {
+      transform: scale(1.01);
+    }
+
+    h2 {
+      text-align: center;
+      color: #6c5ce7;
+      margin-bottom: 20px;
+    }
+
+    .section {
+      margin-top: 30px;
+    }
+
+    .summary ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .summary li {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #dfe6e9;
+      font-size: 1.1rem;
+    }
+
+    .summary p {
+      text-align: right;
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      width: 100%;
+      margin-top: 8px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .payment-methods label {
+      display: block;
+      margin: 12px 0;
+      font-size: 1rem;
+    }
+
+    .place-order button {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(to right, #00b894, #6c5ce7);
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 25px;
+      transition: background 0.3s;
+    }
+
+    .place-order button:hover {
+      background: linear-gradient(to right, #6c5ce7, #00b894);
+    }
+
+    @media screen and (max-width: 600px) {
+      nav ul {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .checkout-container {
+        margin: 20px;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>🛍️ Checkout</header>
+
+<nav>
+  <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="login.html">Login</a></li>
+      <li><a href="shop.html">Spellbooks</a></li>
+      <li><a href="Contactus.html">Send Owl</a></li>
+      <li><a href="Aboutus.html">Our Magic</a></li>
+      <li><a href="Mylibrary.html">Tomes</a></li>
+      <li><a href="purchased.html">Artifacts</a></li>
+      <li><a href="wishlist.html">Wish Scroll</a></li>
+      <li><a href="checkout.html">Enchantment</a></li>
+  </ul>
+</nav>
+
+<div class="checkout-container">
+  <h2>Order Summary</h2>
+  <div class="summary section">
+    <ul id="orderSummary">
+      <!-- Dynamic Items -->
+    </ul>
+    <p>Total: ₹<span id="totalAmount">0</span></p>
+  </div>
+
+  <div class="extras section">
+    <label>Apply Coupon Code:
+      <input type="text" id="coupon" placeholder="Enter coupon code" />
+    </label>
+    <label>Gift Card Code:
+      <input type="text" id="giftcard" placeholder="Enter gift card" />
+    </label>
+  </div>
+
+  <div class="payment-methods section">
+    <h3>Choose Payment Method</h3>
+    <label><input type="radio" name="payment" value="Credit Card" checked> Credit/Debit Card</label>
+    <label><input type="radio" name="payment" value="UPI"> UPI (Google Pay, PhonePe)</label>
+    <label><input type="radio" name="payment" value="Net Banking"> Net Banking</label>
+    <label><input type="radio" name="payment" value="Cash on Delivery"> Cash on Delivery</label>
+  </div>
+
+  <div class="place-order section">
+    <button onclick="placeOrder()">Place Order</button>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const orderList = document.getElementById("orderSummary");
+    const totalDisplay = document.getElementById("totalAmount");
+
+    let total = 0;
+    let content = "";
+
+    const buyNowItem = JSON.parse(localStorage.getItem("buyNowItem"));
+    const wishlistItem = JSON.parse(localStorage.getItem("wishlistItem"));
+
+    if (buyNowItem && buyNowItem.title && buyNowItem.price) {
+      content += `<li><span>${buyNowItem.title}</span><span>₹${buyNowItem.price}</span></li>`;
+      total += parseFloat(buyNowItem.price);
+    }
+
+    if (wishlistItem && wishlistItem.title && wishlistItem.price) {
+      content += `<li><span>${wishlistItem.title}</span><span>₹${wishlistItem.price}</span></li>`;
+      total += parseFloat(wishlistItem.price);
+    }
+
+    if (content === "") {
+      orderList.innerHTML = "<li>Your cart is empty.</li>";
+    } else {
+      orderList.innerHTML = content;
+    }
+
+    totalDisplay.textContent = total.toFixed(2);
+  });
+
+  function placeOrder() {
+    const paymentMethod = document.querySelector("input[name='payment']:checked").value;
+    alert("Your order has been placed using " + paymentMethod + "! Thank you for shopping at The Book Nook.");
+
+    localStorage.removeItem("buyNowItem");
+    localStorage.removeItem("wishlistItem");
+
+    window.location.href = "index.html";
+  }
+</script>
+
+</body>
+</html>

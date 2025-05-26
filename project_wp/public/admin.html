@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal - Enchanted Bookstore</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Fauna+One&display=swap');
+        
+        :root {
+            --gold: #FFD700;
+            --purple: #6A0DAD;
+            --deep-blue: #0A0E3F;
+            --twilight: #1A1C4D;
+        }
+        
+        body {
+            font-family: 'Fauna One', serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--deep-blue);
+            color: #f0f0f0;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255,215,0,0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(106,13,173,0.1) 0%, transparent 20%),
+                url('https://images.unsplash.com/photo-1531685250784-7569952593d2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-attachment: fixed;
+            background-size: cover;
+        }
+
+        .admin-container {
+            background-color: rgba(10, 14, 63, 0.9);
+            backdrop-filter: blur(3px);
+            box-shadow: 0 0 30px rgba(106, 13, 173, 0.5);
+            max-width: 1200px;
+            margin: 0 auto;
+            border-left: 1px solid var(--gold);
+            border-right: 1px solid var(--gold);
+            min-height: 100vh;
+        }
+
+        .admin-header {
+            position: relative;
+            padding: 30px 20px;
+            text-align: center;
+            background: 
+                linear-gradient(to bottom, rgba(10,14,63,0.9), rgba(26,28,77,0.7)),
+                url('https://images.unsplash.com/photo-1531685250784-7569952593d2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .admin-title {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 2.5rem;
+            color: var(--gold);
+            text-shadow: 0 0 15px rgba(255,215,0,0.7);
+            margin-bottom: 10px;
+        }
+
+        .admin-subtitle {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 1.2rem;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .admin-nav {
+            background: linear-gradient(to right, transparent, rgba(106,13,173,0.7), transparent);
+            padding: 15px 0;
+            border-top: 1px solid rgba(255,215,0,0.3);
+            border-bottom: 1px solid rgba(255,215,0,0.3);
+            position: relative;
+        }
+
+        .admin-nav-list {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .admin-nav-item {
+            margin: 0 20px;
+            position: relative;
+        }
+
+        .admin-nav-link {
+            color: white;
+            text-decoration: none;
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 16px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .admin-nav-link:hover {
+            background: rgba(255,215,0,0.2);
+            color: var(--gold);
+            text-shadow: 0 0 10px rgba(255,215,0,0.7);
+        }
+
+        .admin-nav-link.active {
+            background: rgba(255,215,0,0.3);
+            color: var(--gold);
+        }
+
+        .admin-nav-item::before {
+            content: "✦";
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gold);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .admin-nav-item:hover::before {
+            opacity: 1;
+        }
+
+        /* Logout Button Styles */
+        .logout-btn {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255,215,0,0.3);
+            color: var(--gold);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-family: 'Cinzel Decorative', cursive;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,215,0,0.2);
+            text-shadow: 0 0 8px rgba(255,215,0,0.7);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        /* Rest of your existing styles... */
+        .admin-content {
+            padding: 30px;
+        }
+
+        .admin-section {
+            background: rgba(26, 28, 77, 0.7);
+            border-radius: 8px;
+            border: 1px solid rgba(255,215,0,0.2);
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 20px rgba(106,13,173,0.3);
+        }
+
+        .admin-section-title {
+            font-family: 'Cinzel Decorative', cursive;
+            color: var(--gold);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            border-bottom: 1px solid rgba(255,215,0,0.3);
+            padding-bottom: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: rgba(10, 14, 63, 0.8);
+            border: 1px solid rgba(255,215,0,0.2);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(106,13,173,0.5);
+            border-color: var(--gold);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            color: var(--gold);
+            font-family: 'Cinzel Decorative', cursive;
+            margin: 10px 0;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,215,0,0.2);
+        }
+
+        th {
+            background: rgba(106,13,173,0.5);
+            font-family: 'Cinzel Decorative', cursive;
+            color: var(--gold);
+        }
+
+        tr:hover {
+            background: rgba(255,215,0,0.1);
+        }
+
+        .btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 20px;
+            font-family: 'Cinzel Decorative', cursive;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, var(--purple), #8A2BE2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(to right, #8A2BE2, var(--purple));
+            box-shadow: 0 0 10px rgba(255,215,0,0.5);
+        }
+
+        .btn-danger {
+            background: linear-gradient(to right, #8B0000, #FF0000);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: linear-gradient(to right, #FF0000, #8B0000);
+            box-shadow: 0 0 10px rgba(255,0,0,0.5);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--gold);
+            font-family: 'Cinzel Decorative', cursive;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            background: rgba(26, 28, 77, 0.8);
+            border: 1px solid rgba(255,215,0,0.3);
+            border-radius: 5px;
+            color: white;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 10px rgba(255,215,0,0.5);
+        }
+
+        .floating-books {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-book {
+            position: absolute;
+            width: 60px;
+            height: 80px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.7;
+            filter: drop-shadow(0 0 5px rgba(255,215,0,0.5));
+            animation: floatBook 15s linear infinite;
+        }
+
+        @keyframes floatBook {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            100% { transform: translateY(-100px) rotate(10deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <header class="admin-header">
+            <div class="floating-books">
+                <div class="floating-book" style="left:10%; top:20%; animation-delay:0s; background-image:url('book1.jpg')"></div>
+                <div class="floating-book" style="left:25%; top:30%; animation-delay:2s; background-image:url('book2.jpg')"></div>
+                <div class="floating-book" style="left:75%; top:25%; animation-delay:4s; background-image:url('book3.jpg')"></div>
+            </div>
+            
+            <h1 class="admin-title">Archmage's Control Panel</h1>
+            <p class="admin-subtitle">Manage the Enchanted Archive</p>
+        </header>
+
+        <nav class="admin-nav">
+            <ul class="admin-nav-list">
+                <li class="admin-nav-item"><a href="index.html" class="admin-nav-link active">Dashboard</a></li>
+                <li class="admin-nav-item"><a href="shop.html" class="admin-nav-link">Tomes</a></li>
+                <li class="admin-nav-item"><a href="purchased.html" class="admin-nav-link">Orders</a></li>
+                <li class="admin-nav-item"><a href="Mylibrary.html" class="admin-nav-link">Users</a></li>
+                <li class="admin-nav-item"><a href="Contactus.html" class="admin-nav-link">Settings</a></li>
+                <li class="admin-nav-item"><a href="index.html" class="admin-nav-link">Back to Store</a></li>
+            </ul>
+            <button class="logout-btn" id="logoutBtn">Logout ✧</button>
+        </nav>
+
+        <main class="admin-content">
+            <section class="admin-section">
+                <h2 class="admin-section-title">Archive Statistics</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">1,248</div>
+                        <div class="stat-label">Tomes in Collection</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">342</div>
+                        <div class="stat-label">Orders This Moon</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">2,156</div>
+                        <div class="stat-label">Enchanted Users</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="admin-section">
+                <h2 class="admin-section-title">Recent Orders</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#ENCH-7854</td>
+                            <td>Merlin Ambrosius</td>
+                            <td>2025-04-14</td>
+                            <td>42 Gold</td>
+                            <td>Delivered</td>
+                            <td>
+                                <button class="btn btn-primary">View</button>
+                                <button class="btn btn-danger">Cancel</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#ENCH-7853</td>
+                            <td>Morgana Le Fay</td>
+                            <td>2025-04-13</td>
+                            <td>67 Gold</td>
+                            <td>Shipped</td>
+                            <td>
+                                <button class="btn btn-primary">View</button>
+                                <button class="btn btn-danger">Cancel</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#ENCH-7852</td>
+                            <td>Gandalf the Grey</td>
+                            <td>2025-04-12</td>
+                            <td>89 Gold</td>
+                            <td>Processing</td>
+                            <td>
+                                <button class="btn btn-primary">View</button>
+                                <button class="btn btn-danger">Cancel</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#ENCH-7851</td>
+                            <td>Albus Dumbledore</td>
+                            <td>2025-04-11</td>
+                            <td>105 Gold</td>
+                            <td>Pending</td>
+                            <td>
+                                <button class="btn btn-primary">View</button>
+                                <button class="btn btn-danger">Cancel</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="admin-section">
+                <h2 class="admin-section-title">Add New Tome</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="book-title">Tome Title</label>
+                        <input type="text" id="book-title" placeholder="Enter tome title">
+                    </div>
+                    <div class="form-group">
+                        <label for="book-author">Author</label>
+                        <input type="text" id="book-author" placeholder="Enter author name">
+                    </div>
+                    <div class="form-group">
+                        <label for="book-genre">Genre</label>
+                        <select id="book-genre">
+                            <option value="">Select genre</option>
+                            <option value="Ancient Tomes">Ancient Tomes</option>
+                            <option value="Arcane Knowledge">Arcane Knowledge</option>
+                            <option value="Mystery Scrolls">Mystery Scrolls</option>
+                            <option value="Love Potions">Love Potions</option>
+                            <option value="Fantasy Grimoires">Fantasy Grimoires</option>
+                            <option value="Alchemy">Alchemy</option>
+                            <option value="Dark Arts">Dark Arts</option>
+                            <option value="Wizard Biographies">Wizard Biographies</option>
+                            <option value="Spellcraft">Spellcraft</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="book-price">Price (Gold)</label>
+                        <input type="number" id="book-price" placeholder="Enter price in gold">
+                    </div>
+                    <div class="form-group">
+                        <label for="book-description">Description</label>
+                        <textarea id="book-description" rows="4" placeholder="Enter tome description"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Tome</button>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Create floating books dynamically
+        function createFloatingBooks() {
+            const container = document.querySelector('.admin-header .floating-books');
+            const bookCount = 5;
+            
+            for (let i = 1; i <= bookCount; i++) {
+                const book = document.createElement('div');
+                book.className = 'floating-book';
+                book.style.left = `${Math.random() * 80 + 10}%`;
+                book.style.top = `${Math.random() * 60 + 10}%`;
+                book.style.animationDelay = `${Math.random() * 10}s`;
+                book.style.backgroundImage = `url(book${(i % 10) + 1}.jpg)`;
+                container.appendChild(book);
+            }
+        }
+
+        // Handle logout functionality
+        function setupLogout() {
+            const logoutBtn = document.getElementById('logoutBtn');
+            logoutBtn.addEventListener('click', function() {
+                // In a real app, you would also clear server-side session
+                localStorage.removeItem('loggedInUser');
+                window.location.href = 'index.html?logout=true';
+            });
+        }
+
+        // Highlight active nav item
+        function setupNavHighlighting() {
+            const navLinks = document.querySelectorAll('.admin-nav-link');
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            
+            navLinks.forEach(link => {
+                const linkPage = link.getAttribute('href').split('/').pop();
+                if (linkPage === currentPage) {
+                    link.classList.add('active');
+                }
+                
+                link.addEventListener('click', function(e) {
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createFloatingBooks();
+            setupNavHighlighting();
+            setupLogout();
+        });
+    </script>
+</body>
+</html>

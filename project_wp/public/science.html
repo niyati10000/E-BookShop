@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Science Books</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #eef9f5;
+      color: #2c3e50;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    header {
+      background-color: #1abc9c;
+      color: white;
+      padding: 25px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+
+    header p {
+      font-size: 18px;
+      margin-top: 5px;
+    }
+
+    /* Animated Molecules */
+    .molecule {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      animation: float 10s linear infinite;
+    }
+
+    .molecule:nth-child(1) { top: 10%; left: 5%; animation-duration: 8s; }
+    .molecule:nth-child(2) { top: 50%; left: 10%; animation-duration: 12s; }
+    .molecule:nth-child(3) { top: 20%; left: 90%; animation-duration: 10s; }
+    .molecule:nth-child(4) { top: 70%; left: 80%; animation-duration: 15s; }
+    .molecule:nth-child(5) { top: 35%; left: 50%; animation-duration: 11s; }
+
+    @keyframes float {
+      0% { transform: translateY(0) scale(1); opacity: 0.6; }
+      50% { transform: translateY(-20px) scale(1.2); opacity: 1; }
+      100% { transform: translateY(0) scale(1); opacity: 0.6; }
+    }
+
+    section {
+      padding: 30px;
+      flex: 1;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .book {
+      background: white;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 1s ease forwards;
+      opacity: 0;
+    }
+
+    .book:nth-child(1) { animation-delay: 0.2s; }
+    .book:nth-child(2) { animation-delay: 0.4s; }
+    .book:nth-child(3) { animation-delay: 0.6s; }
+    .book:nth-child(4) { animation-delay: 0.8s; }
+    .book:nth-child(5) { animation-delay: 1s; }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+    }
+
+    .book img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .book h3 {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+
+    footer {
+      background-color: #1abc9c;
+      color: white;
+      text-align: center;
+      padding: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Science Books</h1>
+    <p>Explore the wonders of the universe, biology, physics, and beyond!</p>
+    <div class="molecule"></div>
+    <div class="molecule"></div>
+    <div class="molecule"></div>
+    <div class="molecule"></div>
+    <div class="molecule"></div>
+  </header>
+
+  <section>
+    <div class="grid">
+      <div class="book">
+        <img src="humankind.jpg" alt="Science Book 1">
+        <h3>A Brief History of Time – Stephen Hawking</h3>
+      </div>
+      <div class="book">
+        <img src="of.jpg" alt="Science Book 2">
+        <h3>Cosmos – Carl Sagan</h3>
+      </div>
+      <div class="book">
+        <img src="gene.jpg" alt="Science Book 3">
+        <h3>The Gene – Siddhartha Mukherjee</h3>
+      </div>
+      <div class="book">
+        <img src="the.jpg" alt="Science Book 4">
+        <h3>The Selfish Gene – Richard Dawkins</h3>
+      </div>
+      <div class="book">
+        <img src="hurry.jpg" alt="Science Book 5">
+        <h3>Astrophysics for People in a Hurry – Neil deGrasse Tyson</h3>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 The Book Nook - Science Genre | Designed with ❤️ & Curiosity
+  </footer>
+
+</body>
+</html>

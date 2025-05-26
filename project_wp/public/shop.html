@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Shop</title>
+    <style>
+       body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color:#2d3436;
+    color: #f6f6f3;
+    padding: 20px 40px;
+    text-align: center;
+    font-size: 2em;
+    position: relative;
+}
+
+.user-status {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 14px;
+    background: rgba(45, 52, 54, 0.7);
+    padding: 5px 15px;
+    border-radius: 20px;
+}
+
+.user-status a {
+    color: #fdcb6e;
+    text-decoration: none;
+    margin-left: 10px;
+    transition: all 0.3s ease;
+}
+
+.user-status a:hover {
+    text-shadow: 0 0 8px rgba(253, 203, 110, 0.7);
+}
+
+nav {
+    background-color:#636e72;
+    padding: 10px 0;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #fdcb6e;
+}
+
+.book-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    padding: 40px;
+}
+
+.book {
+    background-color: white;
+    padding: 15px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.book img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.4s ease;
+}
+
+.book:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+.book:hover img {
+    transform: scale(1.1);
+}
+
+.price {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 20px;
+    transition: transform 0.4s ease;
+    font-weight: bold;
+}
+
+.book.clicked .price {
+    transform: translateX(-50%) scale(1);
+}
+
+.title {
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.wishlist-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    font-size: 1.2rem;
+    color: #e74c3c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    transition: background 0.3s ease;
+}
+
+.wishlist-btn:hover {
+    background: rgba(255, 255, 255, 1);
+}
+
+.wishlist-btn.saved::before {
+    content: '❤️';
+}
+
+.wishlist-btn::before {
+    content: '🤍';
+}
+
+.buy-now {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #411366;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.buy-now:hover {
+    background-color: #301f3c;
+}
+
+/* Admin controls */
+.admin-controls {
+    display: none;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 2;
+}
+
+.admin-controls button {
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+    margin-right: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.admin-controls button:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: scale(1.1);
+}
+
+.stock-count {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+}
+
+/* Add book form */
+.add-book-form {
+    background: white;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    display: none;
+}
+
+.add-book-form h3 {
+    margin-top: 0;
+    color: #2d3436;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #2d3436;
+}
+
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.form-actions {
+    text-align: right;
+    margin-top: 20px;
+}
+
+.form-actions button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.cancel-btn {
+    background: #ddd;
+}
+
+.save-btn {
+    background: #411366;
+    color: white;
+}
+
+    </style>
+</head>
+<body>
+
+<header> Welcome to The Book Nook - Shop
+    <div class="user-status">
+        <span id="userGreeting">Guest</span>
+        <a href="login.html" id="loginLogoutLink">Login</a>
+    </div>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li id="adminNavItem" style="display:none;"><a href="admin.html">Admin Portal</a></li>
+        <li><a href="shop.html">Spellbooks</a></li>
+        <li><a href="Contactus.html">Send Owl</a></li>
+        <li><a href="Aboutus.html">Our Magic</a></li>
+        <li><a href="Mylibrary.html">Tomes</a></li>
+        <li><a href="purchased.html">Artifacts</a></li>
+        <li><a href="wishlist.html">Wish Scroll</a></li>
+        <li><a href="checkout.html">Enchantment</a></li>
+    </ul>
+</nav>
+
+<!-- Add book form (for admin) -->
+<div class="add-book-form" id="addBookForm">
+    <h3>Add New Book</h3>
+    <form id="bookForm">
+        <div class="form-group">
+            <label for="bookTitle">Title</label>
+            <input type="text" id="bookTitle" required>
+        </div>
+        <div class="form-group">
+            <label for="bookImage">Image URL</label>
+            <input type="text" id="bookImage" required>
+        </div>
+        <div class="form-group">
+            <label for="bookPrice">Price (₹)</label>
+            <input type="number" id="bookPrice" required>
+        </div>
+        <div class="form-group">
+            <label for="bookStock">Stock Quantity</label>
+            <input type="number" id="bookStock" required>
+        </div>
+        <div class="form-actions">
+            <button type="button" class="cancel-btn" onclick="hideAddBookForm()">Cancel</button>
+            <button type="submit" class="save-btn">Save Book</button>
+        </div>
+    </form>
+</div>
+
+<!-- Add book button (for admin) -->
+<div style="text-align: center; margin-top: 20px; display: none;" id="addBookBtnContainer">
+    <button onclick="showAddBookForm()" style="padding: 10px 20px; background: #411366; color: white; border: none; border-radius: 5px; cursor: pointer;">Add New Book</button>
+</div>
+
+<div class="book-grid" id="bookGrid">
+    <!-- Books will be loaded dynamically -->
+</div>
+
+<script>
+    // Book data - in a real app this would come from a database
+    let books = [
+        { id: 1, title: "The Rising Sun", image: "sun.jpg", price: 1299, stock: 15 },
+        { id: 2, title: "Into the Wild", image: "into.jpg", price: 1499, stock: 8 },
+        { id: 3, title: "Echoes of Silence", image: "echoes.jpg", price: 950, stock: 12 },
+        { id: 4, title: "Dreamcatcher", image: "dream.jpg", price: 1125, stock: 5 },
+        { id: 5, title: "Mystic River", image: "river.jpg", price: 1345, stock: 7 },
+        { id: 6, title: "The Gene Whisper", image: "gene.jpg", price: 1120, stock: 10 },
+        { id: 7, title: "Inside the Mind", image: "brian.jpg", price: 1100, stock: 9 },
+        { id: 8, title: "Daring Greatly", image: "daring.jpg", price: 1145, stock: 6 },
+        { id: 9, title: "Anne's Diary", image: "anne.jpg", price: 1085, stock: 11 },
+        { id: 10, title: "Tell the Wolves I'm Home", image: "brunt.jpg", price: 1150, stock: 4 },
+        { id: 11, title: "The Café Chronicles", image: "cafe.jpg", price: 990, stock: 14 },
+        { id: 12, title: "Einstein: The Curious Mind", image: "einstein.jpg", price: 1190, stock: 8 },
+        { id: 13, title: "Hooked: How to Build Habit-Forming Products", image: "hooked.jpg", price: 1050, stock: 7 },
+        { id: 14, title: "Humankind: A Hopeful History", image: "humankind.jpg", price: 1125, stock: 9 },
+        { id: 15, title: "Kindred Souls", image: "kindred.jpg", price: 1110, stock: 5 },
+        { id: 16, title: "Becoming Michelle", image: "michele.jpg", price: 1180, stock: 6 },
+        { id: 17, title: "Mandela: Long Walk to Freedom", image: "nelson.jpg", price: 1165, stock: 10 },
+        { id: 18, title: "Of Mice and Men", image: "of.jpg", price: 980, stock: 8 },
+        { id: 19, title: "The Power of Now", image: "power.jpg", price: 1020, stock: 12 },
+        { id: 20, title: "Think and Grow Rich", image: "hill.jpg", price: 1045, stock: 7 },
+        { id: 21, title: "Moonlight Tales", image: "moonlight.jpg", price: 1070, stock: 9 },
+        { id: 22, title: "Mary: The Untold Story", image: "mary.jpg", price: 1000, stock: 5 },
+        { id: 23, title: "Atomic Habits", image: "atomic.jpg", price: 1170, stock: 11 },
+        { id: 24, title: "The Binding", image: "binding.jpg", price: 1095, stock: 6 },
+        { id: 25, title: "In the fantancies", image: "dream.jpg", price: 1486, stock: 4 },
+        { id: 26, title: "hurranice", image: "hurry.jpg", price: 1647, stock: 3 },
+        { id: 27, title: "love Eternity", image: "love.jpg", price: 1985, stock: 7 },
+        { id: 28, title: "The Binding", image: "immortal.jpg", price: 1555, stock: 5 }
+    ];
+
+    // Check login status
+    function checkLoginStatus() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const loggedIn = urlParams.get('loggedIn');
+        const userType = urlParams.get('userType');
+        const greeting = document.getElementById('userGreeting');
+        const loginLink = document.getElementById('loginLogoutLink');
+        const adminNavItem = document.getElementById('adminNavItem');
+        const addBookBtnContainer = document.getElementById('addBookBtnContainer');
+
+        if (loggedIn === 'true') {
+            if (userType === 'admin') {
+                greeting.textContent = 'Archmage';
+                adminNavItem.style.display = 'block';
+                addBookBtnContainer.style.display = 'block';
+            } else {
+                greeting.textContent = 'Apprentice';
+            }
+            loginLink.textContent = 'Logout';
+            loginLink.href = 'index.html?logout=true';
+        } else if (urlParams.has('logout')) {
+            greeting.textContent = 'Guest';
+            loginLink.textContent = 'Login';
+            loginLink.href = 'login.html';
+            adminNavItem.style.display = 'none';
+            addBookBtnContainer.style.display = 'none';
+        }
+    }
+
+    // Render books based on user type
+    function renderBooks() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const userType = urlParams.get('userType');
+        const isAdmin = userType === 'admin';
+        
+        const bookGrid = document.getElementById('bookGrid');
+        bookGrid.innerHTML = '';
+        
+        books.forEach(book => {
+            const bookElement = document.createElement('div');
+            bookElement.className = 'book';
+            bookElement.onclick = function() { togglePrice(this); };
+            
+            // Admin controls
+            if (isAdmin) {
+                bookElement.innerHTML += `
+                    <div class="admin-controls">
+                        <button onclick="event.stopPropagation(); editBook(${book.id})">✏️</button>
+                        <button onclick="event.stopPropagation(); deleteBook(${book.id})">🗑️</button>
+                    </div>
+                    <div class="stock-count">Stock: ${book.stock}</div>
+                `;
+            }
+            
+            // Book content
+            bookElement.innerHTML += `
+                <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(this)"></button>
+                <img src="${book.image}" alt="${book.title}">
+                <div class="title">${book.title}</div>
+                <div class="price">₹${book.price}</div>
+                <button class="buy-now" onclick="event.stopPropagation(); buyBook(${book.id})">Buy Now</button>
+            `;
+            
+            bookGrid.appendChild(bookElement);
+        });
+    }
+
+    // Book management functions
+    function showAddBookForm() {
+        document.getElementById('addBookForm').style.display = 'block';
+    }
+
+    function hideAddBookForm() {
+        document.getElementById('addBookForm').style.display = 'none';
+        document.getElementById('bookForm').reset();
+    }
+
+    function addBook(event) {
+        event.preventDefault();
+        
+        const newBook = {
+            id: books.length + 1,
+            title: document.getElementById('bookTitle').value,
+            image: document.getElementById('bookImage').value,
+            price: parseInt(document.getElementById('bookPrice').value),
+            stock: parseInt(document.getElementById('bookStock').value)
+        };
+        
+        books.push(newBook);
+        renderBooks();
+        hideAddBookForm();
+    }
+
+    function editBook(bookId) {
+        const book = books.find(b => b.id === bookId);
+        if (!book) return;
+        
+        document.getElementById('bookTitle').value = book.title;
+        document.getElementById('bookImage').value = book.image;
+        document.getElementById('bookPrice').value = book.price;
+        document.getElementById('bookStock').value = book.stock;
+        
+        document.getElementById('bookForm').onsubmit = function(e) {
+            e.preventDefault();
+            
+            book.title = document.getElementById('bookTitle').value;
+            book.image = document.getElementById('bookImage').value;
+            book.price = parseInt(document.getElementById('bookPrice').value);
+            book.stock = parseInt(document.getElementById('bookStock').value);
+            
+            renderBooks();
+            hideAddBookForm();
+        };
+        
+        showAddBookForm();
+    }
+
+    function deleteBook(bookId) {
+        if (confirm('Are you sure you want to delete this book?')) {
+            books = books.filter(book => book.id !== bookId);
+            renderBooks();
+        }
+    }
+
+    function buyBook(bookId) {
+        const book = books.find(b => b.id === bookId);
+        if (book && book.stock > 0) {
+            book.stock--;
+            alert(`You've purchased "${book.title}" for ₹${book.price}`);
+            renderBooks();
+        } else {
+            alert('This book is out of stock!');
+        }
+    }
+
+    // Existing functions
+    function togglePrice(bookElement) {
+        bookElement.classList.toggle('clicked');
+    }
+
+    function toggleWishlist(btn) {
+        btn.classList.toggle('saved');
+
+        const book = btn.closest('.book');
+        const title = book.querySelector('.title').innerText;
+        const imgSrc = book.querySelector('img').src;
+        const price = book.querySelector('.price').innerText;
+
+        const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+
+        const exists = wishlist.find(b => b.title === title);
+        if (exists) {
+            // Remove from wishlist
+            const updated = wishlist.filter(b => b.title !== title);
+            localStorage.setItem('wishlist', JSON.stringify(updated));
+        } else {
+            // Add to wishlist
+            wishlist.push({ title, imgSrc, price });
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+        }
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+        checkLoginStatus();
+        renderBooks();
+        document.getElementById('bookForm').onsubmit = addBook;
+    });
+</script>
+
+</body>
+</html>

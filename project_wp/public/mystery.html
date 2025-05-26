@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mystery Books</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background: radial-gradient(ellipse at center, #111 0%, #000 100%);
+      color: #e0e0e0;
+      overflow-x: hidden;
+      position: relative;
+      cursor: none;
+    }
+
+    header {
+      background-color: rgba(10, 10, 10, 0.95);
+      text-align: center;
+      padding: 30px 10px;
+      position: relative;
+      z-index: 2;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 3em;
+      letter-spacing: 3px;
+      color: #f8f8f8;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+      animation: mysteryGlow 5s ease-in-out infinite;
+    }
+
+    header p {
+      font-size: 1.2em;
+      color: #ccc;
+      margin-top: 5px;
+    }
+
+    @keyframes mysteryGlow {
+      0%, 100% { text-shadow: 0 0 10px #999; }
+      50% { text-shadow: 0 0 20px #fff; }
+    }
+
+    .spotlight {
+      position: fixed;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 80%);
+      pointer-events: none;
+      mix-blend-mode: overlay;
+      z-index: 10;
+    }
+
+    .glyphs {
+      position: fixed;
+      top: 0;
+      left: 0;
+      font-family: monospace;
+      font-size: 14px;
+      width: 100%;
+      height: 100%;
+      color: rgba(255, 255, 255, 0.03);
+      z-index: 0;
+      overflow: hidden;
+      animation: drift 200s linear infinite;
+      white-space: pre;
+      user-select: none;
+    }
+
+    @keyframes drift {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-100%); }
+    }
+
+    section {
+      padding: 40px 30px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+    }
+
+    .book-card {
+      background: rgba(255, 255, 255, 0.04);
+      padding: 15px;
+      border-radius: 12px;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.03);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .book-card:hover {
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
+      transform: translateY(-5px);
+    }
+
+    .book-card img {
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+      border-radius: 8px;
+      filter: grayscale(40%);
+    }
+
+    .book-card h3 {
+      text-align: center;
+      margin-top: 12px;
+      color: #f2f2f2;
+      font-weight: normal;
+    }
+
+    footer {
+      background: rgba(10, 10, 10, 0.9);
+      color: #999;
+      text-align: center;
+      padding: 20px;
+      position: relative;
+      z-index: 2;
+      font-size: 0.95em;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="spotlight" id="spotlight"></div>
+
+  <div class="glyphs">
+    𓂀 Ϟ ⟆ ∆ ∇ ∴ ∵ ⋇ ⧉ ☍ ⌘ ⍰ ⟡ 𝌆 ⬷ 𝄞 ∅ ⊗ ⊘ ✦ 𝓧 𝒮 𝔐 𝔞 𝔯 𝔨 ⊛ ⋆ ✪ ☥
+    𓂀 Ϟ ⟆ ∆ ∇ ∴ ∵ ⋇ ⧉ ☍ ⌘ ⍰ ⟡ 𝌆 ⬷ 𝄞 ∅ ⊗ ⊘ ✦ 𝓧 𝒮 𝔐 𝔞 𝔯 𝔨 ⊛ ⋆ ✪ ☥
+  </div>
+
+  <header>
+    <h1>Mystery Collection</h1>
+    <p>Every story holds a secret. Dare to uncover it?</p>
+  </header>
+
+  <section>
+    <div class="grid">
+      <div class="book-card">
+        <img src="brunt.jpg" alt="Mystery Book 1">
+        <h3>The Silent Witness</h3>
+      </div>
+      <div class="book-card">
+        <img src="notebook.jpg" alt="Mystery Book 2">
+        <h3>Beneath the Stairs</h3>
+      </div>
+      <div class="book-card">
+        <img src="secrets.jpg" alt="Mystery Book 3">
+        <h3>Shadow in the Fog</h3>
+      </div>
+      <div class="book-card">
+        <img src="guilty.jpg" alt="Mystery Book 4">
+        <h3>Whispers of the Past</h3>
+      </div>
+      <div class="book-card">
+        <img src="girl.jpg" alt="Mystery Book 5">
+        <h3>Locked Room Mystery</h3>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 The Book Nook — Secrets Never Sleep.
+  </footer>
+
+  <script>
+    const spotlight = document.getElementById('spotlight');
+    document.addEventListener('mousemove', e => {
+      spotlight.style.left = `${e.clientX - 100}px`;
+      spotlight.style.top = `${e.clientY - 100}px`;
+    });
+  </script>
+</body>
+</html>

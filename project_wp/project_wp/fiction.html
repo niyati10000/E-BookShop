@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fiction Books</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom, #e6e9f0, #eef1f5);
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* Sparkles */
+    .sparkle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0;
+      animation: sparkle 3s infinite ease-in-out;
+    }
+
+    @keyframes sparkle {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+        transform: translateY(-20px) scale(1.5);
+      }
+      100% {
+        transform: translateY(0) scale(1);
+        opacity: 0;
+      }
+    }
+
+    header {
+      background: linear-gradient(to right, #1e3c72, #2a5298);
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+      position: relative;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px #fff, 0 0 20px #f0f;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 10px #fff, 0 0 20px #f0f;
+      }
+      to {
+        text-shadow: 0 0 20px #fff, 0 0 30px #0ff;
+      }
+    }
+
+    .book-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .book {
+      background-color: white;
+      width: 220px;
+      margin: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      animation: popIn 1s ease forwards;
+      opacity: 0;
+    }
+
+    .book:nth-child(even) {
+      animation-delay: 0.3s;
+    }
+
+    .book:nth-child(odd) {
+      animation-delay: 0.6s;
+    }
+
+    @keyframes popIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .book:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+    }
+
+    .book img {
+      width: 100%;
+      border-radius: 8px;
+      animation: levitate 4s ease-in-out infinite;
+    }
+
+    .book-title {
+      font-weight: bold;
+      margin: 10px 0 5px;
+      color: #2c3e50;
+      text-align: center;
+    }
+
+    .book-description {
+      font-size: 0.9em;
+      color: #555;
+      text-align: center;
+    }
+
+    @keyframes levitate {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    footer {
+      background: linear-gradient(to right, #1e3c72, #2a5298);
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+      margin-top: 30px;
+      font-style: italic;
+      box-shadow: 0 -4px 10px rgba(0,0,0,0.2);
+    }
+
+    footer::before {
+      content: "✨";
+      display: block;
+      font-size: 1.5em;
+      margin-bottom: 10px;
+      animation: twinkle 2s infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Magical Sparkles -->
+  <div class="sparkle" style="top: 10%; left: 15%; animation-delay: 0s;"></div>
+  <div class="sparkle" style="top: 20%; left: 70%; animation-delay: 1s;"></div>
+  <div class="sparkle" style="top: 40%; left: 40%; animation-delay: 2s;"></div>
+  <div class="sparkle" style="top: 60%; left: 80%; animation-delay: 1.5s;"></div>
+  <div class="sparkle" style="top: 80%; left: 20%; animation-delay: 2.5s;"></div>
+
+  <header>
+    <h1>Welcome to the World of Fiction</h1>
+  </header>
+
+  <div class="book-container">
+    <div class="book">
+      <img src="midnight.jpg" alt="The Great Adventure">
+      <div class="book-title">The Great Adventure</div>
+      <div class="book-description">An epic journey through uncharted territories.</div>
+    </div>
+    <div class="book">
+      <img src="stardust.jpg" alt="Mystery of the Old Manor">
+      <div class="book-title">Mystery of the Old Manor</div>
+      <div class="book-description">Unravel the secrets hidden within the ancient walls.</div>
+    </div>
+    <div class="book">
+      <img src="cg.jpg" alt="Love in Times of War">
+      <div class="book-title">Love in Times of War</div>
+      <div class="book-description">A tale of romance amidst the chaos of battle.</div>
+    </div>
+    <div class="book">
+      <img src="tree.jpg" alt="The Last Sorcerer">
+      <div class="book-title">The Last Sorcerer</div>
+      <div class="book-description">Magic and mystery in a world on the brink of collapse.</div>
+    </div>
+    <div class="book">
+      <img src="time.jpg" alt="Echoes of the Past">
+      <div class="book-title">Echoes of the Past</div>
+      <div class="book-description">Discovering hidden truths in forgotten memories.</div>
+    </div>
+  </div>
+
+  <footer>
+    “Books are uniquely portable magic.” – Stephen King
+  </footer>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Library - The Book Nook</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f6f8;
+    }
+
+    header {
+      background-color: #2d3436;
+      color: #fff;
+      padding: 25px;
+      font-size: 2em;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+
+    nav {
+      background-color: #636e72;
+      padding: 10px 0;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 0;
+      margin: 0;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    nav ul li a:hover {
+      text-decoration: underline;
+    }
+
+    .library-container {
+      padding: 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+
+    .book-card {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .book-card:hover {
+      transform: scale(1.03);
+    }
+
+    .book-cover {
+      width: 100%;
+      height: 500px;
+      object-fit: contain;
+      background-color: #fff;
+      padding: 10px;
+    }
+
+    .book-info {
+      padding: 15px;
+    }
+
+    .book-info h3 {
+      margin: 0;
+      font-size: 1.2rem;
+      color: #2d3436;
+    }
+
+    .book-info p {
+      margin: 5px 0;
+      color: #636e72;
+      font-size: 0.9rem;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.8);
+    }
+
+    .modal-content {
+      margin: 5% auto;
+      width: 80%;
+      max-width: 1000px;
+      height: 80vh;
+      background-color: #fff;
+      padding: 0;
+      border-radius: 8px;
+      position: relative;
+    }
+
+    .modal-content iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 8px;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 2rem;
+      color: #fff;
+      cursor: pointer;
+    }
+    
+    /* PDF download button */
+    .pdf-download {
+      display: block;
+      text-align: center;
+      background-color: #2d3436;
+      color: white;
+      padding: 8px;
+      margin-top: 10px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    
+    .pdf-download:hover {
+      background-color: #636e72;
+    }
+  </style>
+</head>
+<body>
+
+<header>📚 My Library</header>
+<nav>
+  <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="login.html">Login</a></li>
+      <li><a href="shop.html">Spellbooks</a></li>
+      <li><a href="Contactus.html">Send Owl</a></li>
+      <li><a href="Aboutus.html">Our Magic</a></li>
+      <li><a href="Mylibrary.html">Tomes</a></li>
+      <li><a href="purchased.html">Artifacts</a></li>
+      <li><a href="wishlist.html">Wish Scroll</a></li>
+      <li><a href="checkout.html">Enchantment</a></li>
+  </ul>
+</nav>
+
+<div class="library-container">
+  <!-- Book 1 -->
+  <div class="book-card">
+    <img class="book-cover" src="midnight.jpg" alt="The Midnight Library Cover">
+    <div class="book-info">
+      <h3>The Midnight Library</h3>
+      <p>by Matt Haig</p>
+      <a href="midnight.pdf" class="pdf-download" download="The Midnight Library - Matt Haig.pdf">Download PDF</a>
+      <button onclick="openPDF('midnight.pdf')" class="pdf-download">Read Online</button>
+    </div>
+  </div>
+
+  <!-- Book 2 -->
+  <div class="book-card">
+    <img class="book-cover" src="you.png" alt="You Are a Badass Cover">
+    <div class="book-info">
+      <h3>You Are a Badass</h3>
+      <p>by Jen Sincero</p>
+      <a href="you.pdf" class="pdf-download" download="You Are a Badass - Jen Sincero.pdf">Download PDF</a>
+      <button onclick="openPDF('you.pdf')" class="pdf-download">Read Online</button>
+    </div>
+  </div>
+
+  <!-- Book 3 -->
+  <div class="book-card">
+    <img class="book-cover" src="slient.jpg" alt="The Silent Patient Cover">
+    <div class="book-info">
+      <h3>The Silent Patient</h3>
+      <p>by Alex Michaelides</p>
+      <a href="slient.pdf" class="pdf-download" download="The Silent Patient - Alex Michaelides.pdf">Download PDF</a>
+      <button onclick="openPDF('slient.pdf')" class="pdf-download">Read Online</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for reading PDF -->
+<div id="pdfModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closePDF()">&times;</span>
+    <iframe id="pdfFrame" src=""></iframe>
+  </div>
+</div>
+
+<script>
+  function openPDF(file) {
+    document.getElementById("pdfModal").style.display = "block";
+    document.getElementById("pdfFrame").src = file;
+  }
+
+  function closePDF() {
+    document.getElementById("pdfModal").style.display = "none";
+    document.getElementById("pdfFrame").src = "";
+  }
+
+  // Close modal on outside click
+  window.onclick = function(event) {
+    const modal = document.getElementById("pdfModal");
+    if (event.target === modal) {
+      closePDF();
+    }
+  };
+</script>
+
+</body>
+</html>

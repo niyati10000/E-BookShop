@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Non-Fiction Books</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            background-color: #eaeaea;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #34495e;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .book-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+        .book {
+            background-color: white;
+            width: 200px;
+            margin: 10px;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .book:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .book img {
+            width: 100%;
+            border-radius: 5px;
+        }
+        .book-title {
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .book-description {
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Non-Fiction Books</h1>
+    </header>
+    <div class="book-container">
+        <!-- Book 1 -->
+        <div class="book">
+            <img src="michele.jpg" alt="Book 1">
+            <div class="book-title">The Art of Science</div>
+            <div class="book-description">Exploring the beauty and intricacies of scientific discoveries.</div>
+        </div>
+        <!-- Book 2 -->
+        <div class="book">
+            <img src="david.jpg" alt="Book 2">
+            <div class="book-title">Historical Perspectives</div>
+            <div class="book-description">A deep dive into the events that shaped our world.</div>
+        </div>
+        <!-- Book 3 -->
+        <div class="book">
+            <img src="pencil.jpg" alt="Book 3">
+            <div class="book-title">Mindful Living</div>
+            <div class="book-description">Techniques and philosophies for a balanced life.</div>
+        </div>
+        <!-- Book 4 -->
+        <div class="book">
+            <img src="immortal.jpg" alt="Book 4">
+            <div class="book-title">Economics Explained</div>
+            <div class="book-description">Understanding the forces that drive our economies.</div>
+        </div>
+        <!-- Book 5 -->
+        <div class="book">
+            <img src="humankind.jpg" alt="Book 5">
+            <div class="book-title">Culinary Journeys</div>
+            <div class="book-description">A gastronomic tour around the globe.</div>
+        </div>
+    </div>
+</body>
+</html>

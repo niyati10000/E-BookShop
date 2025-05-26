@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Enchanted Bookstore</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Fauna+One&display=swap');
+        
+        :root {
+            --gold: #FFD700;
+            --purple: #6A0DAD;
+            --deep-blue: #0A0E3F;
+            --twilight: #1A1C4D;
+        }
+        
+        body {
+            font-family: 'Fauna One', serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--deep-blue);
+            color: #f0f0f0;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255,215,0,0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(106,13,173,0.1) 0%, transparent 20%);
+            background-attachment: fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .magic-container {
+            background-color: rgba(10, 14, 63, 0.85);
+            backdrop-filter: blur(3px);
+            box-shadow: 0 0 30px rgba(106, 13, 173, 0.5);
+            max-width: 1200px;
+            margin: 0 auto;
+            border-left: 1px solid var(--gold);
+            border-right: 1px solid var(--gold);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Enchanted Header */
+        header {
+            position: relative;
+            padding: 30px 20px;
+            text-align: center;
+            background: 
+                linear-gradient(to bottom, rgba(10,14,63,0.9), rgba(26,28,77,0.7));
+            background-size: cover;
+            background-position: center;
+            border-bottom: 2px solid var(--gold);
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="white" opacity="0.7"/></svg>');
+            background-size: 3px 3px;
+            opacity: 0.3;
+            animation: twinkle 5s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+
+        .logo {
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo img {
+            height: 80px;
+            filter: drop-shadow(0 0 10px rgba(255,215,0,0.7));
+            transition: all 0.5s ease;
+            animation: float 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+
+        .logo img:hover {
+            filter: drop-shadow(0 0 20px rgba(255,215,0,0.9));
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .tagline {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 20px;
+            margin-top: 10px;
+            color: var(--gold);
+            text-shadow: 0 0 8px rgba(255,215,0,0.5);
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+            z-index: 1;
+        }
+
+        .tagline::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            opacity: 0.7;
+        }
+
+        .tagline:hover {
+            color: white;
+            text-shadow: 0 0 12px rgba(255,255,255,0.8);
+        }
+
+        /* Magic Navigation */
+        nav ul {
+            display: flex;
+            justify-content: center;
+            background: linear-gradient(to right, transparent, rgba(106,13,173,0.5), transparent);
+            padding: 12px 0;
+            margin: 0;
+            list-style: none;
+            border-top: 1px solid rgba(255,215,0,0.3);
+            border-bottom: 1px solid rgba(255,215,0,0.3);
+        }
+
+        nav ul li {
+            margin: 0 15px;
+            position: relative;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 5px 10px;
+            transition: all 0.3s ease;
+            border-radius: 15px;
+            font-family: 'Cinzel Decorative', cursive;
+        }
+
+        nav ul li a:hover {
+            color: var(--gold);
+            text-shadow: 0 0 8px rgba(255,215,0,0.7);
+            background: rgba(106,13,173,0.3);
+        }
+
+        nav ul li::before {
+            content: "✦";
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gold);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        nav ul li:hover::before {
+            opacity: 1;
+        }
+
+        /* Login Form */
+        .login-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+            background: rgba(26, 28, 77, 0.8);
+            border-radius: 8px;
+            border: 1px solid rgba(255,215,0,0.3);
+            box-shadow: 0 0 20px rgba(106,13,173,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+        }
+
+        .login-container h2 {
+            font-family: 'Cinzel Decorative', cursive;
+            color: var(--gold);
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 2rem;
+            text-shadow: 0 0 10px rgba(255,215,0,0.5);
+        }
+
+        .login-container form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-family: 'Cinzel Decorative', cursive;
+            color: var(--gold);
+            font-size: 1rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid rgba(255,215,0,0.3);
+            border-radius: 5px;
+            background: rgba(10, 14, 63, 0.6);
+            color: white;
+            font-family: 'Fauna One', serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 10px rgba(255,215,0,0.5);
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+
+        .magic-btn {
+            padding: 12px 20px;
+            background: linear-gradient(to right, var(--purple), var(--deep-blue));
+            border: 1px solid var(--gold);
+            border-radius: 25px;
+            color: white;
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .magic-btn::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(rgba(255,215,0,0.3), transparent 70%);
+            opacity: 0;
+            transform: scale(0.5);
+            transition: transform 0.5s, opacity 0.5s;
+        }
+
+        .magic-btn:hover::before {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .magic-btn:hover {
+            background: linear-gradient(to right, var(--deep-blue), var(--purple));
+            box-shadow: 0 0 15px rgba(255,215,0,0.7);
+            transform: translateY(-3px);
+        }
+
+        .separator {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .separator .line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(255,215,0,0.5), transparent);
+        }
+
+        .separator span {
+            padding: 0 15px;
+            color: var(--gold);
+            font-family: 'Cinzel Decorative', cursive;
+        }
+
+        .extra-links {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .extra-links a {
+            color: var(--gold);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+            font-size: 0.9rem;
+        }
+
+        .extra-links a:hover {
+            text-shadow: 0 0 8px rgba(255,215,0,0.7);
+        }
+
+        .register-option {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,215,0,0.2);
+        }
+
+        .register-option p {
+            margin-bottom: 15px;
+            color: #f0f0f0;
+        }
+
+        .notification {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            text-align: center;
+            display: none;
+        }
+
+        .success {
+            background-color: rgba(46, 204, 113, 0.2);
+            border: 1px solid rgba(46, 204, 113, 0.5);
+            color: #2ecc71;
+        }
+
+        .error {
+            background-color: rgba(231, 76, 60, 0.2);
+            border: 1px solid rgba(231, 76, 60, 0.5);
+            color: #e74c3c;
+        }
+
+        /* Floating elements */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.3;
+            animation: floatElement 20s linear infinite;
+        }
+
+        .element-star {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23FFD700"><path d="M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6-4.8-6 4.8 2.4-7.2-6-4.8h7.6z"/></svg>');
+        }
+
+        .element-moon {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23FFD700"><path d="M10 2c-1.82 0-3.53.5-5 1.35C7.99 5.08 10 8.3 10 12s-2.01 6.92-5 8.65C6.47 21.5 8.18 22 10 22c5.52 0 10-4.48 10-10S15.52 2 10 2z"/></svg>');
+        }
+
+        .element-book {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23FFD700"><path d="M21 4H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H3V6h18v12zM9 8h2v8H9zm4 0h2v8h-2z"/></svg>');
+        }
+
+        @keyframes floatElement {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Enchanted Footer */
+        footer {
+            background: linear-gradient(to bottom, rgba(10,14,63,0.9), rgba(26,28,77,1));
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid rgba(255,215,0,0.3);
+            position: relative;
+        }
+
+        footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+        }
+
+        footer p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-wrap: wrap;
+            }
+
+            nav ul li {
+                margin: 5px 10px;
+            }
+
+            .login-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="magic-container">
+        <header>
+            <div class="logo"><img src="booklogo.jpg" alt="Enchanted Library Logo"></div>
+            <div class="tagline">Where Stories Come Alive</div>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="shop.html">Spellbooks</a></li>
+                <li><a href="Contactus.html">Send Owl</a></li>
+                <li><a href="Aboutus.html">Our Magic</a></li>
+                <li><a href="Mylibrary.html">Tomes</a></li>
+                <li><a href="purchased.html">Artifacts</a></li>
+                <li><a href="wishlist.html">Wish Scroll</a></li>
+                <li><a href="checkout.html">Enchantment</a></li>
+            </ul>
+        </nav>
+
+        <div class="login-section">
+            <div class="floating-elements">
+                <div class="floating-element element-star" style="left:10%; animation-delay:0s;"></div>
+                <div class="floating-element element-moon" style="left:25%; animation-delay:3s;"></div>
+                <div class="floating-element element-book" style="left:70%; animation-delay:6s;"></div>
+                <div class="floating-element element-star" style="left:40%; animation-delay:9s;"></div>
+                <div class="floating-element element-moon" style="left:90%; animation-delay:12s;"></div>
+                <div class="floating-element element-book" style="left:60%; animation-delay:15s;"></div>
+                <div class="floating-element element-star" style="left:15%; animation-delay:18s;"></div>
+            </div>
+            
+            <div class="login-container">
+                <h2>Magical Gateway</h2>
+                <div id="notification" class="notification"></div>
+                <form id="loginForm" action="/login" method="POST">
+                    <div class="form-group">
+                        <label for="username">Wizard Name</label>
+                        <input type="text" id="username" name="username" placeholder="Enter your wizard name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Secret Incantation</label>
+                        <input type="password" id="password" name="password" placeholder="Enter your secret incantation" required>
+                    </div>
+                    <button type="submit" class="magic-btn">Cast Login Spell</button>
+                    
+                    <div class="separator">
+                        <div class="line"></div>
+                        <span>OR</span>
+                        <div class="line"></div>
+                    </div>
+                    
+                    <button type="button" class="magic-btn" onclick="location.href='/auth/google'">Login with Crystal Ball</button>
+                    
+                    <div class="extra-links">
+                        <a href="forgot-password.html">Forgot Incantation?</a>
+                    </div>
+                    
+                    <div class="register-option">
+                        <p>New to the Magical Realm?</p>
+                        <button type="button" class="magic-btn" onclick="location.href='register.html'">Join the Wizarding Order</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <footer>
+            <p>Contact: Owl Post or Crystal Ball 123-456-7890</p>
+            <p>&copy; 2025 The Enchanted Archive. All Spells Reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create more floating elements
+            const floatingContainer = document.querySelector('.floating-elements');
+            const elementTypes = ['element-star', 'element-moon', 'element-book'];
+            
+            for (let i = 0; i < 15; i++) {
+                const element = document.createElement('div');
+                element.classList.add('floating-element');
+                element.classList.add(elementTypes[i % elementTypes.length]);
+                element.style.left = `${Math.random() * 100}%`;
+                element.style.animationDelay = `${Math.random() * 20}s`;
+                floatingContainer.appendChild(element);
+            }
+            
+            // Handle login form submission
+            const loginForm = document.getElementById('loginForm');
+            const notification = document.getElementById('notification');
+            
+            loginForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const formData = {
+                    username: document.getElementById('username').value,
+                    password: document.getElementById('password').value
+                };
+                
+                try {
+                    const response = await fetch('/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        // Show success message
+                        notification.className = 'notification success';
+                        notification.textContent = 'Magic portal opening...';
+                        notification.style.display = 'block';
+                        
+                        // Redirect to home page after successful login
+                        setTimeout(() => {
+                            window.location.href = 'index.html';
+                        }, 1500);
+                    } else {
+                        // Show error message
+                        notification.className = 'notification error';
+                        notification.textContent = data.message || 'Magical spell failed. Please try again.';
+                        notification.style.display = 'block';
+                        
+                        setTimeout(() => {
+                            notification.style.display = 'none';
+                        }, 3000);
+                    }
+                } catch (error) {
+                    notification.className = 'notification error';
+                    notification.textContent = 'A magical disruption occurred. Please try again later.';
+                    notification.style.display = 'block';
+                    
+                    setTimeout(() => {
+                        notification.style.display = 'none';
+                    }, 3000);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>About Us - The Book Nook</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      color: #2c3e50;
+    }
+
+    header {
+      background-color: #2d3436;
+      color: white;
+      padding: 30px;
+      text-align: center;
+      font-size: 2.2rem;
+      letter-spacing: 1px;
+    }
+
+    nav {
+      background-color: #636e72;
+      padding: 10px 0;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      padding: 0;
+      margin: 0;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    nav ul li a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 40px 20px;
+    }
+
+    .about-section,
+    .story-section,
+    .memory-section,
+    .team,
+    .photo-gallery-wrapper {
+      animation: fadeIn 1.5s ease-in-out;
+      margin-bottom: 50px;
+    }
+
+    .about-section h2,
+    .story-section h2,
+    .memory-section h2,
+    .photo-gallery-wrapper h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #2d3436;
+    }
+
+    .about-section p,
+    .story-section p,
+    .memory-section p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .story-section {
+      background: #ffffff;
+      padding: 30px;
+      border-left: 6px solid #74b9ff;
+      border-radius: 8px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .memory-section ul {
+      padding-left: 20px;
+    }
+
+    .memory-section li {
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+
+    .team {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      animation: fadeInUp 2s ease;
+    }
+
+    .member {
+      flex: 1 1 220px;
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .member:hover {
+      transform: scale(1.05);
+    }
+
+    .member img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+    }
+
+    .member h4 {
+      margin: 10px 0 5px;
+      color: #2c3e50;
+    }
+
+    .member p {
+      font-size: 0.9rem;
+      color: #636e72;
+    }
+
+    .photo-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .photo-gallery img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .photo-gallery img:hover {
+      transform: scale(1.03);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>About Us</header>
+
+<nav>
+  <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="login.html">Login</a></li>
+      <li><a href="shop.html">Spellbooks</a></li>
+      <li><a href="Contactus.html">Send Owl</a></li>
+      <li><a href="Aboutus.html">Our Magic</a></li>
+      <li><a href="Mylibrary.html">Tomes</a></li>
+      <li><a href="purchased.html">Artifacts</a></li>
+      <li><a href="wishlist.html">Wish Scroll</a></li>
+      <li><a href="checkout.html">Enchantment</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+
+  <div class="about-section">
+    <h2>Welcome to The Book Nook 📚</h2>
+    <p>At The Book Nook, we believe that books are more than just paper and ink — they are powerful gateways to knowledge, imagination, and personal growth. Founded in 2023, our mission has been simple yet profound: to create a digital haven for book lovers around the world.</p>
+    <p>Whether you're a fan of gripping thrillers, life-changing biographies, or soul-soothing poetry, our vast and diverse collection ensures there’s something for every reader. We offer a seamless reading experience with interactive features like personalized libraries, wishlist tracking, and in-browser reading — all designed to keep you connected to the stories you love.</p>
+    <p>Behind The Book Nook is a passionate team of bookworms, techies, and creators who work tirelessly to ensure that reading remains accessible, immersive, and joyful for everyone.</p>
+  </div>
+
+  <div class="story-section">
+    <h2>Our Story</h2>
+    <p>It all began with a rainy afternoon and a cup of chai. Niyati, an avid reader with a dream, sat on her windowsill frustrated at how fragmented online reading experiences had become. Books were scattered, poorly categorized, and lacked community. That’s when the idea sparked — to build a cozy corner on the internet where stories and readers could truly connect.</p>
+    <p>Over late nights, countless design iterations, and a few burnt-out keyboards, The Book Nook came to life. Today, it’s more than just an online bookstore — it’s a community-driven platform that champions storytelling and celebrates every genre with heart and warmth.</p>
+  </div>
+
+  <div class="memory-section">
+    <h2>Milestones & Memories</h2>
+    <ul>
+      <li>📅 January 2023: Idea of The Book Nook was born.</li>
+      <li>🛠️ March 2023: First prototype went live.</li>
+      <li>📚 July 2023: Reached 10,000 books in our collection.</li>
+      <li>🎉 December 2023: Hit 1,000 active users.</li>
+      <li>🌐 March 2024: Launched multilingual reading interface.</li>
+    </ul>
+  </div>
+
+  <div class="team">
+    <div class="member">
+      <img src="niyati.jpg" alt="Founder">
+      <h4>Niyati Bansal</h4>
+      <p>Founder & Chief Curator</p>
+    </div>
+    <div class="member">
+      <img src="stuti.jpg" alt="CTO">
+      <h4>Stuti Gupta</h4>
+      <p>Head of Technology</p>
+    </div>
+    <div class="member">
+      <img src="nalin.jpg" alt="Designer">
+      <h4>Nalin Gupta</h4>
+      <p>UI/UX Designer</p>
+    </div>
+    <div class="member">
+      <img src="vikram.jpg" alt="Editor">
+      <h4>Vikram Joshi</h4>
+      <p>Content & Editorial Head</p>
+    </div>
+  </div>
+
+  <div class="photo-gallery-wrapper">
+    <h2>Moments We Cherish 📸</h2>
+    <div class="photo-gallery">
+      <img src="shelf.jpg" alt="Book Nook shelf">
+      <img src="cafe.jpg" alt="Reader in cafe">
+      <img src="team.jpg" alt="Team working">
+      <img src="event.jpg" alt="Book club event">
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
